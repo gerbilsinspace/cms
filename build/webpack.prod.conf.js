@@ -12,36 +12,6 @@ var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 var loadMinified = require('./load-minified')
 
-var firebase = {};
-
-for (var i = 0; i < process.argv.length; i++) {
-  var item = process.argv[i];
-
-  if (item.indexOf('FIREBASE_API_KEY') != -1) {
-    firebase.apiKey = item.replace('FIREBASE_API_KEY=', '');
-  }
-
-  if (item.indexOf('FIREBASE_AUTH_DOMAIN') != -1) {
-    firebase.authDomain = item.replace('FIREBASE_AUTH_DOMAIN=', '');
-  }
-
-  if (item.indexOf('FIREBASE_DATABASE_URL') != -1) {
-    firebase.databaseUrl = item.replace('FIREBASE_DATABASE_URL=', '');
-  }
-
-  if (item.indexOf('FIREBASE_PROJECT_ID') != -1) {
-    firebase.projectId = item.replace('FIREBASE_PROJECT_ID=', '');
-  }
-
-  if (item.indexOf('FIREBASE_STORAGE_BUCKET') != -1) {
-    firebase.storageBucket = item.replace('FIREBASE_STORAGE_BUCKET=', '');
-  }
-
-  if (item.indexOf('FIREBASE_MESSAGING_SENDER_ID') != -1) {
-    firebase.messagingSenderId = item.replace('FIREBASE_MESSAGING_SENDER_ID=', '');
-  }
-}
-
 var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
@@ -62,13 +32,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': config.dev.env,
-      'FIREBASE_API_KEY': firebase.apiKey,
-      'FIREBASE_AUTH_DOMAIN': firebase.authDomain,
-      'FIREBASE_DATABASE_URL': firebase.databaseUrl,
-      'FIREBASE_PROJECT_ID': firebase.projectId,
-      'FIREBASE_STORAGE_BUCKET': firebase.storageBucket,
-      'FIREBASE_MESSAGING_SENDER_ID': firebase.messagingSenderId
+      'process.env': config.dev.env
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
