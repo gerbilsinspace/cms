@@ -2,7 +2,6 @@ var firebase = {};
 
 for (var i = 0; i < process.argv.length; i++) {
   var item = process.argv[i];
-  console.log(item);
 
   if (item.indexOf('FIREBASE_API_KEY') != -1) {
     firebase.apiKey = item.replace('FIREBASE_API_KEY=', '');
