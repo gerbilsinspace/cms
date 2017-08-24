@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "eslint-friendly-formatter": "^3.0.0",
     "extract-text-webpack-plugin": "^2.0.0",
     "firebase": "^4.3.0",
     "semver": "^5.4.1",
@@ -45,7 +46,6 @@
     "cssnano": "^3.10.0",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^6.2.1",
-    "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-html": "^3.1.0",
     "eslint-plugin-promise": "^3.4.0",
