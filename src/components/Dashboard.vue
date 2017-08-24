@@ -3,12 +3,12 @@
     <CMSHeader />
     <main>
       <h1>Dashboard</h1>
-      <a href="/cms/profile">
+      <router-link to="/cms/profile">
         <DashboardGridItem title="Profile"></DashboardGridItem>
-      </a>
-      <a href="/cms/pages">
+      </router-link>
+      <router-link to="/cms/pages">
         <DashboardGridItem title="Pages"></DashboardGridItem>
-      </a>
+      </router-link>
     </main>
   </div>
 </template>

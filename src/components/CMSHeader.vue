@@ -1,6 +1,6 @@
 <template>
   <header>
-    <a href="/cms">Abell Design</a>
+    <router-link to="/cms">Abell Design</router-link>
   </header>
 </template>
 
