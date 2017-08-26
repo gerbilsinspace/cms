@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import ContentTypeEdit from '@/components/ContentTypeEdit'
 import ContentTypes from '@/components/ContentTypes'
 import Dashboard from '@/components/Dashboard'
-import Hello from '@/components/Hello'
 import Login from '@/components/Login'
 import Profile from '@/components/Profile'
 import Register from '@/components/Register'
@@ -13,9 +13,10 @@ import { auth } from '@/firebase'
 Vue.use(Router)
 
 const routesToRedirectIfLoggedOut = [
-  '/cms',
-  '/cms/content-types',
-  '/cms/profile'
+  '/',
+  '/content-types',
+  '/content-types/:contentTypeId',
+  '/profile'
 ]
 
 const routesToRedirectIfLoggedIn = [
@@ -37,24 +38,24 @@ const router = new Router({
       component: Register
     },
     {
-      path: '/cms',
-      name: 'Dashboard',
-      component: Dashboard
-    },
-    {
-      path: '/cms/content-types',
+      path: '/content-types',
       name: 'ContentTypes',
       component: ContentTypes
     },
     {
-      path: '/cms/profile',
+      path: '/content-types/:contentTypeId',
+      name: 'ContentTypeEdit',
+      component: ContentTypeEdit
+    },
+    {
+      path: '/profile',
       name: 'Profile',
       component: Profile
     },
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Dashboard',
+      component: Dashboard
     }
   ]
 })
