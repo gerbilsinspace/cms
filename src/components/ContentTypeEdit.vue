@@ -37,7 +37,7 @@
     },
     firebase: {
       contentType: {
-        source: db.ref('contentTypes/' + location.pathname.replace('/cms/content-types/', '')),
+        source: db.ref('contentTypes/' + location.pathname.replace('/content-types/', '')),
         asObject: true
       },
       contentTypes: {
@@ -75,7 +75,7 @@
 
         if (deleteName === this.contentType.name) {
           this.$firebaseRefs.contentTypes.remove()
-          this.$router.push('/cms/content-types')
+          this.$router.push('/content-types')
         }
       }
     }

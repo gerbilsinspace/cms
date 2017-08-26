@@ -35,7 +35,7 @@
           <li v-for="contentType in contentTypes">
             <div>
               {{ contentType.name }}
-              <router-link :to="{ path: `/cms/content-types/${contentType['.key']}` }">Edit</router-link>
+              <router-link :to="{ path: `/content-types/${contentType['.key']}` }">Edit</router-link>
             </div>
           </li>
         </ol>

@@ -3,10 +3,10 @@
     <CMSHeader />
     <main>
       <h1>Dashboard</h1>
-      <router-link to="/cms/content-types">
+      <router-link to="/content-types">
         <DashboardGridItem title="Content Types"></DashboardGridItem>
       </router-link>
-      <router-link to="/cms/profile">
+      <router-link to="/profile">
         <DashboardGridItem title="Profile"></DashboardGridItem>
       </router-link>
     </main>
