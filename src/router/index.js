@@ -5,6 +5,7 @@ import ContentTypeEdit from '@/components/ContentTypeEdit'
 import ContentTypes from '@/components/ContentTypes'
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/Login'
+import PageMissing from '@/components/PageMissing'
 import Profile from '@/components/Profile'
 import Register from '@/components/Register'
 
@@ -56,6 +57,11 @@ const router = new Router({
       path: '/',
       name: 'Dashboard',
       component: Dashboard
+    },
+    {
+      path: '*',
+      name: 'PageMissing',
+      component: PageMissing
     }
   ]
 })
