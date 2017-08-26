@@ -18,7 +18,7 @@
 
   h1, h2 {
     font-weight: normal;
-    margin: 0;
+    margin: 0 0 10px;
   }
 
   ul {

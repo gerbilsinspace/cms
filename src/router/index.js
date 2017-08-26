@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import ContentTypes from '@/components/ContentTypes'
 import Dashboard from '@/components/Dashboard'
 import Hello from '@/components/Hello'
 import Login from '@/components/Login'
-import Pages from '@/components/Pages'
 import Profile from '@/components/Profile'
 import Register from '@/components/Register'
 
@@ -14,7 +14,7 @@ Vue.use(Router)
 
 const routesToRedirectIfLoggedOut = [
   '/cms',
-  '/cms/pages',
+  '/cms/content-types',
   '/cms/profile'
 ]
 
@@ -42,9 +42,9 @@ const router = new Router({
       component: Dashboard
     },
     {
-      path: '/cms/pages',
-      name: 'Pages',
-      component: Pages
+      path: '/cms/content-types',
+      name: 'ContentTypes',
+      component: ContentTypes
     },
     {
       path: '/cms/profile',
