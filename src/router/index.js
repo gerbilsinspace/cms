@@ -83,7 +83,7 @@ router.beforeEach((to, from, next) => {
     if (redirectToLogin) {
       next('/login')
     } else if (redirectToDashboard) {
-      next('/cms')
+      next('/')
     } else {
       next()
     }
