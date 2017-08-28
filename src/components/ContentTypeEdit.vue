@@ -35,6 +35,15 @@
         error: ''
       }
     },
+    mounted: function () {
+      var current = this
+
+      db.ref('contentTypes/' + location.pathname.replace('/content-types/', ''))
+        .once('value', function (val) {
+          current.contentType = val.val()
+        }
+      )
+    },
     firebase: {
       contentType: {
         source: db.ref('contentTypes/' + location.pathname.replace('/content-types/', '')),
@@ -74,7 +83,7 @@
         var deleteName = prompt('To make sure you are deleting the correct Content Type, please type "' + this.contentType.name + '".', '')
 
         if (deleteName === this.contentType.name) {
-          this.$firebaseRefs.contentTypes.remove()
+          db.ref('contentTypes/' + location.pathname.replace('/content-types/', '')).remove()
           this.$router.push('/content-types')
         }
       }
