@@ -4,6 +4,10 @@ import Router from 'vue-router'
 import ContentTypeEdit from '@/components/ContentTypeEdit'
 import ContentTypes from '@/components/ContentTypes'
 import Dashboard from '@/components/Dashboard'
+import DataEdit from '@/components/DataEdit'
+import DataList from '@/components/DataList'
+import ImageEdit from '@/components/ImageEdit'
+import ImageList from '@/components/ImageList'
 import Login from '@/components/Login'
 import PageMissing from '@/components/PageMissing'
 import Profile from '@/components/Profile'
@@ -17,6 +21,10 @@ const routesToRedirectIfLoggedOut = [
   '/',
   '/content-types',
   '/content-types/:contentTypeId',
+  '/data',
+  '/data/:contentTypeId',
+  '/images',
+  '/images/:imageId',
   '/profile'
 ]
 
@@ -47,6 +55,26 @@ const router = new Router({
       path: '/content-types/:contentTypeId',
       name: 'ContentTypeEdit',
       component: ContentTypeEdit
+    },
+    {
+      path: '/data',
+      name: 'DataList',
+      component: DataList
+    },
+    {
+      path: '/data/:contentTypeId',
+      name: 'DataEdit',
+      component: DataEdit
+    },
+    {
+      path: '/images',
+      name: 'ImageList',
+      component: ImageList
+    },
+    {
+      path: '/images/:imageId',
+      name: 'ImageEdit',
+      component: ImageEdit
     },
     {
       path: '/profile',

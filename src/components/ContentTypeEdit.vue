@@ -38,7 +38,7 @@
     mounted: function () {
       var current = this
 
-      db.ref('contentTypes/' + location.pathname.replace('/content-types/', ''))
+      db.ref('contentType/' + location.pathname.replace('/content-types/', ''))
         .once('value', function (val) {
           current.contentType = val.val()
         }
@@ -46,7 +46,7 @@
     },
     firebase: {
       contentType: {
-        source: db.ref('contentTypes/' + location.pathname.replace('/content-types/', '')),
+        source: db.ref('contentType/' + location.pathname.replace('/content-types/', '')),
         asObject: true
       },
       contentTypes: {
@@ -83,7 +83,7 @@
         var deleteName = prompt('To make sure you are deleting the correct Content Type, please type "' + this.contentType.name + '".', '')
 
         if (deleteName === this.contentType.name) {
-          db.ref('contentTypes/' + location.pathname.replace('/content-types/', '')).remove()
+          db.ref('contentType/' + location.pathname.replace('/content-types/', '')).remove()
           this.$router.push('/content-types')
         }
       }

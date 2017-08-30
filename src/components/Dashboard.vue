@@ -3,27 +3,41 @@
     <CMSHeader />
     <main>
       <h1>Dashboard</h1>
-      <router-link to="/content-types">
-        <DashboardGridItem title="Content Types"></DashboardGridItem>
-      </router-link>
-      <router-link to="/profile">
-        <DashboardGridItem title="Profile"></DashboardGridItem>
-      </router-link>
+      <ul>
+        <li>
+          <router-link to="/data">
+            <GridItem title="Data"></GridItem>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/images">
+            <GridItem title="Images"></GridItem>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/content-types">
+            <GridItem title="Content Types"></GridItem>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/profile">
+            <GridItem title="Profile"></GridItem>
+          </router-link>
+        </li>
+      </ul>
     </main>
   </div>
 </template>
 
 <script>
-  import DashboardGridItem from '@/components/DashboardGridItem'
+  import GridItem from '@/components/GridItem'
   import CMSHeader from '@/components/CMSHeader.vue'
-  import Logout from '@/components/Logout.vue'
 
   export default {
     name: 'dashboard',
     components: {
-      DashboardGridItem,
-      CMSHeader,
-      Logout
+      GridItem,
+      CMSHeader
     }
   }
 </script>

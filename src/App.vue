@@ -21,7 +21,7 @@
     margin: 0 0 10px;
   }
 
-  ul {
+  ul, ol {
     list-style-type: none;
     padding: 0;
   }

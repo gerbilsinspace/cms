@@ -17,11 +17,11 @@
 
         <div v-if='name'>
           <h3>How many {{name}} are there?</h3>
-          <input type="radio" id="one" value="one" v-model="amount" />
-          <label for="one">One</label>
+          <input type="radio" id="one" value="true" v-model="oneOff" />
+          <label for="true">One</label>
           <br />
-          <input type="radio" id="many" value="many" v-model="amount" />
-          <label for="many">Many</label>
+          <input type="radio" id="many" value="false" v-model="oneOff" />
+          <label for="false">Many</label>
         </div>
 
         <div>
@@ -52,13 +52,13 @@
     name: 'ContentTypes',
     firebase: function () {
       return {
-        contentTypes: db.ref('contentTypes/')
+        contentTypes: db.ref('contentType/')
       }
     },
     data: function () {
       return {
         name: '',
-        amount: '',
+        oneOff: '',
         error: ''
       }
     },
@@ -72,7 +72,7 @@
         let matchedContentType = false
 
         for (var i = 0; i < contentTypes.length; i++) {
-          if (contentTypes[i].name === this.name) {
+          if (contentTypes[i].name.toLowerCase() === this.name.toLowerCase().replace(' ', '')) {
             matchedContentType = true
           }
         }
@@ -88,14 +88,14 @@
         }
 
         if (this.error === '') {
-          this.$firebaseRefs.contentTypes.push({
+          this.$firebaseRefs.contentTypes.child(this.name.toLowerCase().replace(' ', '')).update({
             name: this.name,
-            amount: this.amount
+            oneOff: this.oneOff === 'true'
           }).catch(err => {
             this.error = err.message
           }).then(() => {
             this.name = ''
-            this.amount = ''
+            this.oneOff = ''
           })
         }
       }
