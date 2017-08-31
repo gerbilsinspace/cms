@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <Header />
+    <CMSHeader />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import Header from '@/components/Header.vue'
+  import CMSHeader from '@/components/Header.vue'
 
   export default {
     name: 'app',
     components: {
-      Header
+      CMSHeader
     }
   }
 </script>
@@ -48,7 +48,9 @@
   }
 
   main {
-    text-align: center;
+    padding: 20px;
+    float: left;
+    width: calc(100vw - 240px);
   }
 
   aside {

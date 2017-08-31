@@ -2,10 +2,8 @@
   <div>
     <Sidebar />
     <main>
-      <h1>Images</h1>
-
-      <div>
-        <h2>Upload Image</h2>
+      <h1>
+        <span>Images</span>
         <el-upload
           class="upload-demo"
           action=""
@@ -13,9 +11,9 @@
           :multiple="multiple"
           :http-request="handleUpload"
           :file-list="fileList">
-          <el-button size="small" type="primary">Click to upload</el-button>
+          <el-button type="primary">Click to upload</el-button>
         </el-upload>
-      </div>
+      </h1>
 
       <div>
         <h2>List of Images</h2>
@@ -79,3 +77,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .upload-demo {
+    display: inline;
+  }
+</style>
