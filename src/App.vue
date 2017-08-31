@@ -1,13 +1,18 @@
 <template>
   <div id="app">
+    <Header />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import Header from '@/components/Header.vue'
+
   export default {
     name: 'app',
-    props: []
+    components: {
+      Header
+    }
   }
 </script>
 
@@ -44,6 +49,17 @@
 
   main {
     text-align: center;
-    margin-top: 40px;
+  }
+
+  aside {
+    float: left;
+    width: 200px;
+    background-color: #324157;
+    height: calc(100vh - 60px);
+  }
+
+  aside a {
+    color: #FFF;
+    text-decoration: none;
   }
 </style>

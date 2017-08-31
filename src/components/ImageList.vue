@@ -1,32 +1,30 @@
 <template>
-  <div class="content-types">
-    <Header />
+  <div>
+    <Sidebar />
     <main>
+      <h1>Images</h1>
+
       <div>
-        <h1>Images</h1>
+        <h2>Upload Image</h2>
+        <el-upload
+          class="upload-demo"
+          action=""
+          list-type="picture"
+          :multiple="multiple"
+          :http-request="handleUpload"
+          :file-list="fileList">
+          <el-button size="small" type="primary">Click to upload</el-button>
+        </el-upload>
+      </div>
 
-        <div>
-          <h2>Upload Image</h2>
-          <el-upload
-            class="upload-demo"
-            action=""
-            list-type="picture"
-            :multiple="multiple"
-            :http-request="handleUpload"
-            :file-list="fileList">
-            <el-button size="small" type="primary">Click to upload</el-button>
-          </el-upload>
-        </div>
-
-        <div>
-          <h2>List of Images</h2>
-          <ul>
-            <li v-for="image in images">
-              <img style="max-width: 150px; max-height: 150px" v-bind:src="image.downloadURLs[0]" />
-              <span>{{ image.name }}</span>
-            </li>
-          </ul>
-        </div>
+      <div>
+        <h2>List of Images</h2>
+        <ul>
+          <li v-for="image in images">
+            <img style="max-width: 150px; max-height: 150px" v-bind:src="image.downloadURLs[0]" />
+            <span>{{ image.name }}</span>
+          </li>
+        </ul>
       </div>
     </main>
   </div>
@@ -34,14 +32,12 @@
 
 <script>
   import { db, storage } from '@/firebase.js'
-  import Header from '@/components/Header.vue'
-  import GridItem from '@/components/GridItem'
+  import Sidebar from '@/components/Sidebar.vue'
 
   export default {
     name: 'ImageList',
     components: {
-      GridItem,
-      Header
+      Sidebar
     },
     firebase: function () {
       return {

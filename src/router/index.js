@@ -6,7 +6,6 @@ import ContentTypes from '@/components/ContentTypes'
 import Dashboard from '@/components/Dashboard'
 import DataEdit from '@/components/DataEdit'
 import DataList from '@/components/DataList'
-import ImageEdit from '@/components/ImageEdit'
 import ImageList from '@/components/ImageList'
 import Login from '@/components/Login'
 import PageMissing from '@/components/PageMissing'
@@ -24,7 +23,6 @@ const routesToRedirectIfLoggedOut = [
   '/data',
   '/data/:contentTypeId',
   '/images',
-  '/images/:imageId',
   '/profile'
 ]
 
@@ -70,11 +68,6 @@ const router = new Router({
       path: '/images',
       name: 'ImageList',
       component: ImageList
-    },
-    {
-      path: '/images/:imageId',
-      name: 'ImageEdit',
-      component: ImageEdit
     },
     {
       path: '/profile',

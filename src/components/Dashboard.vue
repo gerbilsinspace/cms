@@ -1,43 +1,19 @@
 <template>
-  <div class="dashboard">
-    <Header />
+  <div>
+    <Sidebar />
     <main>
       <h1>Dashboard</h1>
-      <ul>
-        <li>
-          <router-link to="/data">
-            <GridItem title="Data"></GridItem>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/images">
-            <GridItem title="Images"></GridItem>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/content-types">
-            <GridItem title="Content Types"></GridItem>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/profile">
-            <GridItem title="Profile"></GridItem>
-          </router-link>
-        </li>
-      </ul>
     </main>
   </div>
 </template>
 
 <script>
-  import GridItem from '@/components/GridItem'
-  import Header from '@/components/Header.vue'
+  import Sidebar from '@/components/Sidebar'
 
   export default {
     name: 'dashboard',
     components: {
-      GridItem,
-      Header
+      Sidebar
     }
   }
 </script>

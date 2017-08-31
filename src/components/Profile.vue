@@ -1,22 +1,22 @@
 <template>
-  <div class="profile">
-  	<Header />
+  <div>
+    <Sidebar />
     <main>
-    	<h1>Profile</h1>
-    	<Logout />
+  	  <h1>Profile</h1>
+  	  <Logout />
     </main>
   </div>
 </template>
 
 <script>
-	import Header from '@/components/Header.vue'
-	import Logout from '@/components/Logout.vue'
+import Logout from '@/components/Logout.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
-	export default {
-	  name: 'profile',
-	  components: {
-	    Header,
-	    Logout
-	  }
-	}
+export default {
+  name: 'profile',
+  components: {
+    Logout,
+    Sidebar
+  }
+}
 </script>

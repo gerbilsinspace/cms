@@ -1,18 +1,20 @@
 <template>
   <div>
-    <Header />
-    <div v-if='contentType.name'>
-      <h1>{{contentType.name}}</h1>
-    </div>
-    <div v-else>
-      <h1>Loading</h1>
-    </div>
+    <Sidebar />
+    <main>
+      <div v-if='contentType.name'>
+        <h1>{{contentType.name}}</h1>
+      </div>
+      <div v-else>
+        <h1>Loading</h1>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
   import { db } from '@/firebase.js'
-  import Header from '@/components/Header.vue'
+  import Sidebar from '@/components/Sidebar.vue'
 
   export default {
     name: 'dataEdit',
@@ -21,6 +23,9 @@
         error: ''
       }
     },
+    components: {
+      Sidebar
+    },
     firebase: function () {
       return {
         contentType: {
@@ -28,9 +33,6 @@
           asObject: true
         }
       }
-    },
-    components: {
-      Header
     }
   }
 </script>

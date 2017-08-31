@@ -1,31 +1,33 @@
 <template>
   <div>
-    <Header />
-    <div v-if='contentType.name'>
-    	<h1>
-        <span>{{ contentType.name }}</span>
-        <button v-on:click='onSaveClick'>Save</button>
-        <button v-on:click='onDeleteClick'>Delete</button>
-      </h1>
+    <Sidebar />
+    <main>
+      <div v-if='contentType.name'>
+    	  <h1>
+          <span>{{ contentType.name }}</span>
+          <button v-on:click='onSaveClick'>Save</button>
+          <button v-on:click='onDeleteClick'>Delete</button>
+        </h1>
 
-      <div v-if='error'>
-        <h2>{{error}}</h2>
-      </div>
+        <div v-if='error'>
+          <h2>{{error}}</h2>
+        </div>
 
-      <div>
-        <label for='name'>Name:</label>
-        <input type='text' id='name' v-model='name' />
+        <div>
+          <label for='name'>Name:</label>
+          <input type='text' id='name' v-model='name' />
+        </div>
       </div>
-    </div>
-    <div v-else>
-      <h1>Loading</h1>
-    </div>
+      <div v-else>
+        <h1>Loading</h1>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
   import { db } from '@/firebase.js'
-  import Header from '@/components/Header.vue'
+  import Sidebar from '@/components/Sidebar.vue'
 
   export default {
     name: 'contentTypeEdit',
@@ -34,6 +36,9 @@
         name: '',
         error: ''
       }
+    },
+    components: {
+      Sidebar
     },
     mounted: function () {
       var current = this
@@ -52,9 +57,6 @@
       contentTypes: {
         source: db.ref('contentTypes/')
       }
-    },
-    components: {
-      Header
     },
     methods: {
       onSaveClick: function () {

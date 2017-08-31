@@ -1,6 +1,6 @@
 <template>
-  <div class="content-types">
-    <Header />
+  <div>
+    <Sidebar />
     <main>
       <h1>Content Types</h1>
 
@@ -46,7 +46,7 @@
 
 <script>
   import { db } from '@/firebase.js'
-  import Header from '@/components/Header.vue'
+  import Sidebar from '@/components/Sidebar.vue'
 
   export default {
     name: 'ContentTypes',
@@ -55,15 +55,15 @@
         contentTypes: db.ref('contentType/')
       }
     },
+    components: {
+      Sidebar
+    },
     data: function () {
       return {
         name: '',
         oneOff: '',
         error: ''
       }
-    },
-    components: {
-      Header
     },
     methods: {
       onAddContentTypeClick: function () {

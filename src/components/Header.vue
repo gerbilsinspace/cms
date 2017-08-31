@@ -1,6 +1,10 @@
 <template>
   <header>
-    <router-link to="/">Abell Design</router-link>
+    <el-menu mode="horizontal">
+      <el-menu-item index="1">
+        <router-link to="/">Abell Design</router-link>
+      </el-menu-item>
+    </el-menu>
   </header>
 </template>
 
@@ -11,24 +15,7 @@
 </script>
 
 <style scoped>
-	header {
-	  margin: 0;
-	  height: 56px;
-	  padding: 0 16px 0 24px;
-	  background-color: #35495E;
-	  color: #ffffff;
-	}
-
-	header a {
-	  display: block;
-	  position: relative;
-	  font-size: 20px;
-	  line-height: 1;
-	  letter-spacing: .02em;
-	  font-weight: 400;
-	  box-sizing: border-box;
-	  padding-top: 20px;
-	  color: #fff;
+	a {
 	  text-decoration: none;
 	}
 </style>

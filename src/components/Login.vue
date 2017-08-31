@@ -1,21 +1,18 @@
 <template>
-  <div>
-    <Header />
-    <main>
-      <div class="login">
-        <h1>Login</h1>
-        <div>
-          <label for="email">Email: </label>
-          <input id='email' type='email' v-model.trim="email" placeholder="Email">
-        </div>
-        <div>
-          <label for="password">Password: </label>
-          <input id="password" type='password' v-model.trim="password" placeholder="Password">
-        </div>
-        <button v-on:click='onLoginClick'>Login</button>
+  <main>
+    <div class="login">
+      <h1>Login</h1>
+      <div>
+        <label for="email">Email: </label>
+        <input id='email' type='email' v-model.trim="email" placeholder="Email">
       </div>
-    </main>
-  </div>
+      <div>
+        <label for="password">Password: </label>
+        <input id="password" type='password' v-model.trim="password" placeholder="Password">
+      </div>
+      <button v-on:click='onLoginClick'>Login</button>
+    </div>
+  </main>
 </template>
 
 <script>
