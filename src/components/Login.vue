@@ -18,13 +18,9 @@
 <script>
   import { isEmail } from 'validator'
   import { auth } from '@/firebase'
-  import Header from '@/components/Header.vue'
 
   export default {
     name: 'login',
-    components: {
-      Header
-    },
     data () {
       return {
         email: '',
