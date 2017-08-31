@@ -18,7 +18,7 @@
           <router-link to="/content-types">Create Content Type</router-link>
         </el-menu-item>
         <el-menu-item v-for="contentType in contentTypes" :key="contentType['.key']">
-          <router-link :to="{ path: `/content-types/${contentType['.key']}` }">{{ contentType.name }}</router-link>
+          <router-link :to="{ path: `/content-types/${contentType['.key']}` }">Edit {{ contentType.name }}</router-link>
         </el-menu-item>
       </el-menu-item-group>
 
