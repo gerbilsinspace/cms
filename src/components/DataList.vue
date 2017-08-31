@@ -1,6 +1,6 @@
 <template>
   <div class="content-types">
-    <CMSHeader />
+    <Header />
     <main>
       <div>
         <h1>Data</h1>
@@ -18,14 +18,14 @@
 
 <script>
   import { db } from '@/firebase.js'
-  import CMSHeader from '@/components/CMSHeader.vue'
+  import Header from '@/components/Header.vue'
   import GridItem from '@/components/GridItem'
 
   export default {
     name: 'DataList',
     components: {
       GridItem,
-      CMSHeader
+      Header
     },
     firebase: function () {
       return {

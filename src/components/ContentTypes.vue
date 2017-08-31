@@ -1,6 +1,6 @@
 <template>
   <div class="content-types">
-    <CMSHeader />
+    <Header />
     <main>
       <h1>Content Types</h1>
 
@@ -46,7 +46,7 @@
 
 <script>
   import { db } from '@/firebase.js'
-  import CMSHeader from '@/components/CMSHeader.vue'
+  import Header from '@/components/Header.vue'
 
   export default {
     name: 'ContentTypes',
@@ -63,7 +63,7 @@
       }
     },
     components: {
-      CMSHeader
+      Header
     },
     methods: {
       onAddContentTypeClick: function () {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CMSHeader />
+    <Header />
     <div v-if='contentType.name'>
     	<h1>
         <span>{{ contentType.name }}</span>
@@ -25,7 +25,7 @@
 
 <script>
   import { db } from '@/firebase.js'
-  import CMSHeader from '@/components/CMSHeader.vue'
+  import Header from '@/components/Header.vue'
 
   export default {
     name: 'contentTypeEdit',
@@ -54,7 +54,7 @@
       }
     },
     components: {
-      CMSHeader
+      Header
     },
     methods: {
       onSaveClick: function () {

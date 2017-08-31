@@ -1,6 +1,6 @@
 <template>
   <div class="content-types">
-    <CMSHeader />
+    <Header />
     <main>
       <div>
         <h1>Images</h1>
@@ -10,14 +10,22 @@
           <el-upload
             class="upload-demo"
             action=""
+            list-type="picture"
             :multiple="multiple"
             :http-request="handleUpload"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
             :file-list="fileList">
             <el-button size="small" type="primary">Click to upload</el-button>
-            <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
           </el-upload>
+        </div>
+
+        <div>
+          <h2>List of Images</h2>
+          <ul>
+            <li v-for="image in images">
+              <img style="max-width: 150px; max-height: 150px" v-bind:src="image.downloadURLs[0]" />
+              <span>{{ image.name }}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </main>
@@ -25,19 +33,20 @@
 </template>
 
 <script>
-  import { db } from '@/firebase.js'
-  import CMSHeader from '@/components/CMSHeader.vue'
+  import { db, storage } from '@/firebase.js'
+  import Header from '@/components/Header.vue'
   import GridItem from '@/components/GridItem'
 
   export default {
     name: 'ImageList',
     components: {
       GridItem,
-      CMSHeader
+      Header
     },
     firebase: function () {
       return {
-        contentTypes: db.ref('contentType/')
+        contentTypes: db.ref('contentType/'),
+        images: db.ref('images/')
       }
     },
     data: function () {
@@ -50,13 +59,26 @@
     },
     methods: {
       handleUpload: function (data) {
-        console.log(data)
-      },
-      handlePreview: function (file) {
-        console.log(file)
-      },
-      handleRemove: function (file, fileList) {
-        console.log(file, fileList)
+        data.onProgress(10)
+        const storageRef = storage.ref()
+        const imageRef = storageRef.child('images/' + data.file.name)
+        const cleanName = data.file.name.replace('.', '')
+        const referenceRef = db.ref('images/' + cleanName)
+
+        imageRef.put(data.file).then(function (snapshot) {
+          const metadataKeys = Object.keys(snapshot.metadata)
+          let metadata = {}
+
+          data.onProgress(80)
+
+          for (var i = 0; i < metadataKeys.length; i++) {
+            metadata[metadataKeys[i]] = snapshot.metadata[metadataKeys[i]] || ''
+          }
+
+          referenceRef.update(metadata).then(function () {
+            data.onSuccess()
+          })
+        })
       }
     }
   }

@@ -6,7 +6,7 @@
 
 <script>
 	export default {
-	  name: 'CMSHeader'
+	  name: 'Header'
 	}
 </script>
 

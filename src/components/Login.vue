@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CMSHeader />
+    <Header />
     <main>
       <div class="login">
         <h1>Login</h1>
@@ -21,12 +21,12 @@
 <script>
   import { isEmail } from 'validator'
   import { auth } from '@/firebase'
-  import CMSHeader from '@/components/CMSHeader.vue'
+  import Header from '@/components/Header.vue'
 
   export default {
     name: 'login',
     components: {
-      CMSHeader
+      Header
     },
     data () {
       return {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CMSHeader />
+    <Header />
     <main>
       <div class="register">
         <h1>Register</h1>
@@ -26,12 +26,12 @@
 <script>
   import { isEmail } from 'validator'
   import { auth } from '@/firebase'
-  import CMSHeader from '@/components/CMSHeader'
+  import Header from '@/components/Header'
 
   export default {
     name: 'register',
     components: {
-      CMSHeader
+      Header
     },
     data () {
       return {

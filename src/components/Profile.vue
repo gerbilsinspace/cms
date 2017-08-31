@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-  	<CMSHeader />
+  	<Header />
     <main>
     	<h1>Profile</h1>
     	<Logout />
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-	import CMSHeader from '@/components/CMSHeader.vue'
+	import Header from '@/components/Header.vue'
 	import Logout from '@/components/Logout.vue'
 
 	export default {
 	  name: 'profile',
 	  components: {
-	    CMSHeader,
+	    Header,
 	    Logout
 	  }
 	}

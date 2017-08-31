@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CMSHeader />
+    <Header />
     <div v-if='contentType.name'>
       <h1>{{contentType.name}}</h1>
     </div>
@@ -12,7 +12,7 @@
 
 <script>
   import { db } from '@/firebase.js'
-  import CMSHeader from '@/components/CMSHeader.vue'
+  import Header from '@/components/Header.vue'
 
   export default {
     name: 'ImageEdit',
@@ -30,7 +30,7 @@
       }
     },
     components: {
-      CMSHeader
+      Header
     }
   }
 </script>

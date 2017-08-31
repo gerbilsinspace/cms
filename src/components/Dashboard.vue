@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <CMSHeader />
+    <Header />
     <main>
       <h1>Dashboard</h1>
       <ul>
@@ -31,13 +31,13 @@
 
 <script>
   import GridItem from '@/components/GridItem'
-  import CMSHeader from '@/components/CMSHeader.vue'
+  import Header from '@/components/Header.vue'
 
   export default {
     name: 'dashboard',
     components: {
       GridItem,
-      CMSHeader
+      Header
     }
   }
 </script>
