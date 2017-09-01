@@ -2,43 +2,28 @@
   <div>
     <Sidebar />
     <main>
-      <h1>Content Types</h1>
+      <h1>Create Content Type</h1>
 
       <div v-if="error">
         {{error}}
       </div>
 
       <div>
-        <h2>Add Content Type</h2>
-        <div>
-          <label for="name">Name: </label>
-          <input id="name" type="text" v-model.trim="name" placeholder="Name" />
-        </div>
+        <label for="name">Name: </label>
+        <input id="name" type="text" v-model.trim="name" placeholder="Name" />
+      </div>
 
-        <div v-if='name'>
-          <h3>How many {{name}} are there?</h3>
-          <input type="radio" id="one" value="true" v-model="oneOff" />
-          <label for="true">One</label>
-          <br />
-          <input type="radio" id="many" value="false" v-model="oneOff" />
-          <label for="false">Many</label>
-        </div>
-
-        <div>
-          <button v-on:click="onAddContentTypeClick">Add {{name || "Content Type"}}</button>
-        </div>
+      <div v-if='name'>
+        <h3>How many {{name}} are there?</h3>
+        <input type="radio" id="one" value="true" v-model="oneOff" />
+        <label for="true">One</label>
+        <br />
+        <input type="radio" id="many" value="false" v-model="oneOff" />
+        <label for="false">Many</label>
       </div>
 
       <div>
-        <h2>List Content Types</h2>
-        <ol>
-          <li v-for="contentType in contentTypes">
-            <div>
-              {{ contentType.name }}
-              <router-link :to="{ path: `/content-types/${contentType['.key']}` }">Edit</router-link>
-            </div>
-          </li>
-        </ol>
+        <button v-on:click="onAddContentTypeClick">Add {{name || "Content Type"}}</button>
       </div>
     </main>
   </div>
@@ -68,6 +53,14 @@
     methods: {
       onAddContentTypeClick: function () {
         const contentTypes = this.contentTypes
+        const newControl = {
+          controlType: 'textfield',
+          hidden: false,
+          label: 'Name',
+          locked: true,
+          required: false,
+          showInCms: true
+        }
 
         let matchedContentType = false
 
@@ -90,7 +83,10 @@
         if (this.error === '') {
           this.$firebaseRefs.contentTypes.child(this.name.toLowerCase().replace(' ', '')).update({
             name: this.name,
-            oneOff: this.oneOff === 'true'
+            oneOff: this.oneOff === 'true',
+            controls: {
+              '0': newControl
+            }
           }).catch(err => {
             this.error = err.message
           }).then(() => {
