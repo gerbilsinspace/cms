@@ -55,7 +55,7 @@
         const contentTypes = this.contentTypes
         const newControl = {
           controlType: 'textfield',
-          hidden: false,
+          hidden: true,
           label: 'Name',
           locked: true,
           required: false,
