@@ -30,6 +30,7 @@
 </template>
 
 <script>
+  import { router } from '@/router/index.js'
   import { db } from '@/firebase.js'
   import Sidebar from '@/components/Sidebar.vue'
 
@@ -53,14 +54,6 @@
     methods: {
       onAddContentTypeClick: function () {
         const contentTypes = this.contentTypes
-        const newControl = {
-          controlType: 'textfield',
-          hidden: true,
-          label: 'Name',
-          locked: true,
-          required: false,
-          showInCms: true
-        }
 
         let matchedContentType = false
 
@@ -81,17 +74,17 @@
         }
 
         if (this.error === '') {
-          this.$firebaseRefs.contentTypes.child(this.name.toLowerCase().replace(' ', '')).update({
+          const nameCleaned = this.name.toLowerCase().replace(' ', '')
+
+          this.$firebaseRefs.contentTypes.child(nameCleaned).update({
             name: this.name,
-            oneOff: this.oneOff === 'true',
-            controls: {
-              '0': newControl
-            }
+            oneOff: this.oneOff === 'true'
           }).catch(err => {
             this.error = err.message
           }).then(() => {
             this.name = ''
             this.oneOff = ''
+            router.push('/content-types/' + nameCleaned)
           })
         }
       }

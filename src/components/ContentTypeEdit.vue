@@ -6,7 +6,7 @@
           <el-radio-button label="Add" key="Add">Add</el-radio-button>
           <el-radio-button label="Edit" :disabled="!editingControl.label" key="Edit">Edit</el-radio-button>
         </el-radio-group>
-        <el-menu-item-group v-if='editing === "Edit"' :title='editingControl.label'>
+        <el-menu-item-group v-if='editing === "Edit"' :title='editingControlType'>
           <el-menu-item index="1">
             <label :for="editingControlLabel">Name</label>
             <el-input :id="editingControlLabel" v-model="editingControl.label"></el-input>
@@ -73,6 +73,13 @@
       },
       editingControlLabel: function () {
         return this.editingControl.label + 'ID'
+      },
+      editingControlType: function () {
+        if (this.editingControl.controlType === 'textfield') {
+          return 'Text'
+        }
+
+        return ''
       }
     },
     mounted: function () {
@@ -94,10 +101,12 @@
         }
       )
     },
-    firebase: {
-      contentType: {
-        source: db.ref('contentType/' + location.pathname.replace('/content-types/', '')),
-        asObject: true
+    firebase: function () {
+      return {
+        contentType: {
+          source: db.ref('contentType/' + this.$route.params.contentTypeId),
+          asObject: true
+        }
       }
     },
     methods: {

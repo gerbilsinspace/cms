@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import ContentTypeCreate from '@/components/ContentTypeCreate'
 import ContentTypeEdit from '@/components/ContentTypeEdit'
-import ContentTypes from '@/components/ContentTypes'
 import Dashboard from '@/components/Dashboard'
-import DataEdit from '@/components/DataEdit'
-import DataList from '@/components/DataList'
+import Data from '@/components/Data'
+import DataSingle from '@/components/DataSingle'
 import ImageList from '@/components/ImageList'
 import Login from '@/components/Login'
 import PageMissing from '@/components/PageMissing'
@@ -20,8 +20,8 @@ const routesToRedirectIfLoggedOut = [
   '/',
   '/content-types',
   '/content-types/:contentTypeId',
-  '/data',
   '/data/:contentTypeId',
+  '/data/:contentTypeId/:dataId',
   '/images',
   '/profile'
 ]
@@ -31,7 +31,7 @@ const routesToRedirectIfLoggedIn = [
   '/register'
 ]
 
-const router = new Router({
+export const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -46,8 +46,8 @@ const router = new Router({
     },
     {
       path: '/content-types',
-      name: 'ContentTypes',
-      component: ContentTypes
+      name: 'ContentTypeCreate',
+      component: ContentTypeCreate
     },
     {
       path: '/content-types/:contentTypeId',
@@ -55,14 +55,14 @@ const router = new Router({
       component: ContentTypeEdit
     },
     {
-      path: '/data',
-      name: 'DataList',
-      component: DataList
+      path: '/data/:contentTypeId',
+      name: 'Data',
+      component: Data
     },
     {
-      path: '/data/:contentTypeId',
-      name: 'DataEdit',
-      component: DataEdit
+      path: '/data/:contentTypeId/:dataId',
+      name: 'DataSingle',
+      component: DataSingle
     },
     {
       path: '/images',
