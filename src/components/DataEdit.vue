@@ -39,6 +39,7 @@
     },
     props: [
       'contentType',
+      'inputData',
       'title'
     ],
     methods: {
