@@ -4,17 +4,23 @@
     <ul>
       <li v-for='control in contentType.controls'>
         <div v-if="!control.hidden">
-          <div v-if='control.controlType === "textfield"'>
-            <label :for="control.label">{{control.label}}</label>
-            <el-input
-              :id="control.label"
-              :value='inputData[control.label]'
-              v-on:change='onInputChange'
-              v-on:focus='onInputFocus'
-              v-on:blur='onInputBlur'
-              :data-name='control.label'
-            />
-          </div>
+          <label :for="control.label">{{control.label}}</label>
+          <el-input
+            v-if='control.controlType === "textfield"'
+            :id="control.label"
+            :value='inputData[control.label]'
+            :data-name='control.label'
+            v-model='controls[control.label]'
+          />
+          <el-switch
+            v-if='control.controlType === "switch"'
+            :name='control.label'
+            :id='control.label'
+            :value='inputData[control.label]'
+            on-text='Yes'
+            off-text='No'
+            v-model='controls[control.label]'
+          />
         </div>
       </li>
     </ul>
@@ -22,21 +28,23 @@
 </template>
 
 <script>
+  import { db } from '@/firebase'
   export default {
     name: 'DataEdit',
     data: function () {
       return {
-        error: ''
+        error: '',
+        controls: {}
       }
     },
     props: [
-      'onInputChange',
-      'onInputBlur',
-      'onInputFocus',
-      'onSaveClick',
       'contentType',
-      'inputData',
       'title'
-    ]
+    ],
+    methods: {
+      onSaveClick: function () {
+        db.ref('data/' + this.$route.params.contentTypeId + '/' + this.$route.params.dataId).update(this.controls)
+      }
+    }
   }
 </script>

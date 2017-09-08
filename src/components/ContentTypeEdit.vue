@@ -20,6 +20,9 @@
           <el-menu-item index="4">
             <div v-on:click="onSingleTextClick">Text</div>
           </el-menu-item>
+          <el-menu-item index="5">
+            <div v-on:click="onSwitchClick">Switch</div>
+          </el-menu-item>
         </el-menu-item-group>
       </el-menu>
     </aside>
@@ -38,10 +41,9 @@
           <li v-for="control in controls">
             <div class="control-container" v-if='control.showInCms'>
               <div class="control-overlay" :data-label="control.label" v-on:click="onControlClick"></div>
-              <div v-if='control.controlType === "textfield"'>
-                <label :for="control.label">{{ control.label }}</label>
-                <el-input :id="control.label"></el-input>
-              </div>
+              <label :for="control.label">{{ control.label }}</label>
+              <el-input v-if='control.controlType === "textfield"' :id="control.label" />
+              <el-switch v-if='control.controlType === "switch"' :id="control.label" />
             </div>
           </li>
         </ul>
@@ -157,8 +159,14 @@
         }
       },
       onSingleTextClick: function () {
+        this.createNewControl('textfield')
+      },
+      onSwitchClick: function () {
+        this.createNewControl('switch')
+      },
+      createNewControl: function (controlType) {
         const newControl = {
-          controlType: 'textfield',
+          controlType,
           hidden: false,
           label: 'Unnamed',
           locked: false,
@@ -185,6 +193,20 @@
   .content-type-sidebar {
     .buttons {
       margin: 20px 30px;
+    }
+    .el-menu-item-group__title {
+      margin-bottom: 5px;
+    }
+
+    .el-menu-item {
+      height: 32px;
+      line-height: 32px;
+
+      &:first-child,
+      &:last-child {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
     }
   }
   .control-container {
