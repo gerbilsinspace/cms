@@ -23,6 +23,13 @@
               :value='controls[control.label]'
               @input='onSwitchChange(control.label, $event)'
             />
+            <ImageChoice
+              v-if='control.controlType === "image"'
+              :id='control.label'
+              :value='controls[control.label]'
+              :selected='controls[control.label]'
+              @click='onImageChange(control.label, $event)'
+            />
           </div>
         </li>
       </ul>
@@ -33,6 +40,7 @@
 <script>
   import { db, auth } from '@/firebase'
   import Sidebar from '@/components/Sidebar'
+  import ImageChoice from '@/components/ImageChoice'
 
   export default {
     name: 'DataEdit',
@@ -42,7 +50,8 @@
       }
     },
     components: {
-      Sidebar
+      Sidebar,
+      ImageChoice
     },
     methods: {
       onSaveClick: function () {
@@ -65,6 +74,9 @@
         this.controls[label] = val
       },
       onSwitchChange: function (label, val) {
+        this.controls[label] = val
+      },
+      onImageChange: function (label, val) {
         this.controls[label] = val
       }
     },

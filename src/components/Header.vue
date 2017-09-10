@@ -14,8 +14,13 @@
 	}
 </script>
 
-<style scoped>
-	a {
+<style>
+  header li.el-menu-item.is-active {
+    padding: 0;
+  }
+	header li a {
 	  text-decoration: none;
+    display: block;
+    padding: 0 20px;
 	}
 </style>

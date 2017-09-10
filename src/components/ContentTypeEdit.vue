@@ -23,6 +23,9 @@
           <el-menu-item index="5">
             <div v-on:click="onSwitchClick">Switch</div>
           </el-menu-item>
+          <el-menu-item index="6">
+            <div v-on:click="onImageClick">Image</div>
+          </el-menu-item>
         </el-menu-item-group>
       </el-menu>
     </aside>
@@ -44,6 +47,11 @@
               <label :for="control.label">{{ control.label }}</label>
               <el-input v-if='control.controlType === "textfield"' :id="control.label" />
               <el-switch v-if='control.controlType === "switch"' :id="control.label" />
+              <ImageChoice
+                v-if='control.controlType === "image"'
+                :id="control.label"
+                :title="control.label"
+              />
             </div>
           </li>
         </ul>
@@ -57,6 +65,7 @@
 
 <script>
   import { db } from '@/firebase.js'
+  import ImageChoice from '@/components/ImageChoice'
 
   export default {
     name: 'contentTypeEdit',
@@ -68,6 +77,9 @@
         editingControl: {},
         controls: []
       }
+    },
+    components: {
+      ImageChoice
     },
     computed: {
       editingName: function () {
@@ -163,6 +175,9 @@
       },
       onSwitchClick: function () {
         this.createNewControl('switch')
+      },
+      onImageClick: function () {
+        this.createNewControl('image')
       },
       createNewControl: function (controlType) {
         const newControl = {
