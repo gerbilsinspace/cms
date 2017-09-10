@@ -5,7 +5,7 @@ import ContentTypeCreate from '@/components/ContentTypeCreate'
 import ContentTypeEdit from '@/components/ContentTypeEdit'
 import Dashboard from '@/components/Dashboard'
 import Data from '@/components/Data'
-import DataSingle from '@/components/DataSingle'
+import DataEdit from '@/components/DataEdit'
 import ImageList from '@/components/ImageList'
 import Login from '@/components/Login'
 import PageMissing from '@/components/PageMissing'
@@ -61,8 +61,8 @@ export const router = new Router({
     },
     {
       path: '/data/:contentTypeId/:dataId',
-      name: 'DataSingle',
-      component: DataSingle
+      name: 'DataEdit',
+      component: DataEdit
     },
     {
       path: '/images',
