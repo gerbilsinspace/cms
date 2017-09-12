@@ -99,9 +99,11 @@
     mounted: function () {
       var current = this
 
-      db.ref('contentType/' + location.pathname.replace('/content-types/', ''))
+      db.ref('contentType/' + this.$route.params.contentTypeId)
         .once('value', function (val) {
           const contentType = val.val()
+
+          contentType.controls = contentType.controls || {}
           current.contentType = contentType
 
           const controlKeys = Object.keys(contentType.controls)
@@ -127,12 +129,8 @@
       onSaveClick: function () {
         function checkIsMatching (element, id, array) {
           for (var i = 0; i < array.length; i++) {
-            if (id !== i) {
-              const testingElement = array[i].label
-
-              if (element === testingElement) {
-                return true
-              }
+            if ((id !== i) && (element === array[i].label)) {
+              return true
             }
           }
 
@@ -148,13 +146,13 @@
           }
         }
 
-        db.ref('contentType/' + location.pathname.replace('/content-types/', '') + '/controls').set(this.controls)
+        db.ref('contentType/' + this.$route.params.contentTypeId + '/controls').set(this.controls)
       },
       onDeleteClick: function () {
         var deleteName = prompt('To make sure you are deleting the correct Content Type, please type "' + this.contentType.name + '".', '')
 
         if (deleteName === this.contentType.name) {
-          db.ref('contentType/' + location.pathname.replace('/content-types/', '')).remove()
+          db.ref('contentType/' + this.$route.params.contentTypeId).remove()
           this.$router.push('/content-types')
         }
       },
@@ -216,6 +214,7 @@
     .el-menu-item {
       height: 32px;
       line-height: 32px;
+      margin: 0;
 
       &:first-child,
       &:last-child {
