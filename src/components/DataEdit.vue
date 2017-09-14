@@ -1,12 +1,13 @@
 <template>
   <div>
-    <Sidebar />
+    <Sidebar v-if='$route.params.dataId' />
     <main>
-      <h1>{{ $route.params.dataId }} <el-button v-on:click='onSaveClick'>Save</el-button></h1>
+      <h1>{{ $route.params.dataId || $route.params.contentTypeId }} <el-button v-on:click='onSaveClick'>Save</el-button></h1>
       <ul>
         <li v-for='control in contentType.controls'>
           <div v-if="!control.hidden">
             <label :for="control.label">{{control.label}}</label>
+
             <el-input
               v-if='control.controlType === "textfield"'
               :id="control.label"
@@ -46,7 +47,8 @@
     name: 'DataEdit',
     data: function () {
       return {
-        error: ''
+        error: '',
+        controls: {}
       }
     },
     components: {
@@ -58,12 +60,36 @@
         let controls = this.controls
         delete controls['.key']
 
-        db.ref('data/' + this.$route.params.contentTypeId + '/' + this.$route.params.dataId).update(this.controls)
-        this.$router.push('/data/' + this.$route.params.contentTypeId)
-        db.ref('draft/' + auth.currentUser.uid).remove()
+        if (this.$route.params.dataId) {
+          db.ref('data/' + this.$route.params.contentTypeId + '/' + this.$route.params.dataId).update(this.controls)
+          this.$router.push('/data/' + this.$route.params.contentTypeId)
+          db.ref('draft/' + auth.currentUser.uid).remove()
+        } else {
+          db.ref('data/' + this.$route.params.contentTypeId).update(this.controls)
+          this.$router.push('/')
+          db.ref('draft/' + auth.currentUser.uid).remove()
+        }
       },
       inputDataReady: function (val) {
-        const values = val.val()
+        let values = val.val()
+
+        if (!values) {
+          values = {}
+          console.log(values)
+          const controls = this.contentType.controls
+
+          for (var i = 0; i < controls.length; i++) {
+            const control = controls[i]
+            let draftValue = ''
+
+            if (control.controlType === 'switch') {
+              draftValue = false
+            }
+
+            values[control.label] = (draftValue)
+          }
+        }
+        console.log(values)
         const draft = db.ref('/draft/' + auth.currentUser.uid)
 
         draft.set(values)
@@ -81,13 +107,19 @@
       }
     },
     firebase: function () {
+      let inputDataSource = 'data/' + this.$route.params.contentTypeId
+
+      if (this.$route.params.dataId) {
+        inputDataSource = 'data/' + this.$route.params.contentTypeId + '/' + this.$route.params.dataId
+      }
+
       return {
         contentType: {
           source: db.ref('contentType/' + this.$route.params.contentTypeId),
           asObject: true
         },
         inputData: {
-          source: db.ref('data/' + this.$route.params.contentTypeId + '/' + this.$route.params.dataId),
+          source: db.ref(inputDataSource),
           asObject: true,
           readyCallback: this.inputDataReady
         }
