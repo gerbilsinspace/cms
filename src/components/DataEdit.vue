@@ -13,7 +13,7 @@
               :id="control.label"
               :data-name='control.label'
               :value='controls[control.label]'
-              @input='onTextChange(control.label, $event)'
+              @input='onInputChange(control.label, $event)'
             />
             <el-switch
               v-if='control.controlType === "switch"'
@@ -22,14 +22,23 @@
               on-text='Yes'
               off-text='No'
               :value='controls[control.label]'
-              @input='onSwitchChange(control.label, $event)'
+              @input='onInputChange(control.label, $event)'
             />
             <ImageChoice
               v-if='control.controlType === "image"'
               :id='control.label'
               :value='controls[control.label]'
               :selected='controls[control.label]'
-              @click='onImageChange(control.label, $event)'
+              @click='onInputChange(control.label, $event)'
+            />
+            <el-input
+              type="textarea"
+              autosize
+              v-if='control.controlType === "paragraph"'
+              :id="control.label"
+              :data-name="control.label"
+              :value="controls[control.label]"
+              @input='onInputChange(control.label, $event)'
             />
           </div>
         </li>
@@ -96,13 +105,7 @@
 
         this.$bindAsObject('controls', db.ref('draft').child(auth.currentUser.uid))
       },
-      onTextChange: function (label, val) {
-        this.controls[label] = val
-      },
-      onSwitchChange: function (label, val) {
-        this.controls[label] = val
-      },
-      onImageChange: function (label, val) {
+      onInputChange: function (label, val) {
         this.controls[label] = val
       }
     },

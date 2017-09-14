@@ -26,10 +26,13 @@
           <el-menu-item index="6">
             <div v-on:click="onImageClick">Image</div>
           </el-menu-item>
+          <el-menu-item index="7">
+            <div v-on:click="onParagraphClick">Paragraph</div>
+          </el-menu-item>
         </el-menu-item-group>
       </el-menu>
     </aside>
-    <main>
+    <main class="container">
       <div v-if='contentType.name'>
     	  <h1>
           <span>{{ contentType.name }}</span>
@@ -52,6 +55,7 @@
                 :id="control.label"
                 :title="control.label"
               />
+              <el-input v-if='control.controlType === "paragraph"' type="textarea" autosize :id="control.label" />
             </div>
           </li>
         </ul>
@@ -176,6 +180,9 @@
       },
       onImageClick: function () {
         this.createNewControl('image')
+      },
+      onParagraphClick: function () {
+        this.createNewControl('paragraph')
       },
       createNewControl: function (controlType) {
         const newControl = {
