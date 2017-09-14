@@ -5,10 +5,9 @@
       <ImageCreate />
       <div>
         <h2>List of Images</h2>
-        <ul>
+        <ul class="image-list">
           <li v-for="image in images">
             <img style="max-width: 150px; max-height: 150px" :src="image.downloadURLs[0]" />
-            <span>{{ image.name }}</span>
           </li>
         </ul>
       </div>
@@ -34,3 +33,17 @@
     }
   }
 </script>
+
+<style lang="less">
+.image-list {
+  &:after {
+    display: block;
+    content: " ";
+    clear: both;
+  }
+  li {
+    float: left;
+  }
+}
+
+</style>
