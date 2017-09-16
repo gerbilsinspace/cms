@@ -24,21 +24,13 @@
               :value='controls[control.label]'
               @input='onInputChange(control.label, $event)'
             />
-            <el-select
-              v-if='control.controlType === "images"'
+            <ImageChoice
+              v-if='control.controlType === "image"'
               :id='control.label'
-              multiple
-              :placeholder='control.label'
               :value='controls[control.label]'
-              @input='onInputChange(control.label, $event)'
-            >
-              <el-option
-                v-for='image in images'
-                :key='image.name'
-                :label='image.name'
-                :value='image.downloadURLs[0]'
-              />
-            </el-select>
+              :selected='controls[control.label]'
+              @click='onInputChange(control.label, $event)'
+            />
             <el-input
               type="textarea"
               autosize
@@ -106,6 +98,7 @@
             values[control.label] = (draftValue)
           }
         }
+        console.log(values)
         const draft = db.ref('/draft/' + auth.currentUser.uid)
 
         draft.set(values)
@@ -113,7 +106,6 @@
         this.$bindAsObject('controls', db.ref('draft').child(auth.currentUser.uid))
       },
       onInputChange: function (label, val) {
-        console.log(val)
         this.controls[label] = val
       }
     },
@@ -133,9 +125,6 @@
           source: db.ref(inputDataSource),
           asObject: true,
           readyCallback: this.inputDataReady
-        },
-        images: {
-          source: db.ref('images')
         }
       }
     }
