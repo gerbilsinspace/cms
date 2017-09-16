@@ -24,7 +24,7 @@
             <div v-on:click="onSwitchClick">Switch</div>
           </el-menu-item>
           <el-menu-item index="6">
-            <div v-on:click="onImageClick">Image</div>
+            <div v-on:click="onImagesClick">Images</div>
           </el-menu-item>
           <el-menu-item index="7">
             <div v-on:click="onParagraphClick">Paragraph</div>
@@ -50,11 +50,7 @@
               <label :for="control.label">{{ control.label }}</label>
               <el-input v-if='control.controlType === "textfield"' :id="control.label" />
               <el-switch v-if='control.controlType === "switch"' :id="control.label" />
-              <ImageChoice
-                v-if='control.controlType === "image"'
-                :id="control.label"
-                :title="control.label"
-              />
+              <el-select v-if='control.controlType === "images"' :id="control.label" filterable :placeholder="control.label" />
               <el-input v-if='control.controlType === "paragraph"' type="textarea" autosize :id="control.label" />
             </div>
           </li>
@@ -178,8 +174,8 @@
       onSwitchClick: function () {
         this.createNewControl('switch')
       },
-      onImageClick: function () {
-        this.createNewControl('image')
+      onImagesClick: function () {
+        this.createNewControl('images')
       },
       onParagraphClick: function () {
         this.createNewControl('paragraph')
