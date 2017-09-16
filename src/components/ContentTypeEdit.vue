@@ -196,10 +196,8 @@
         this.editing = 'Edit'
       },
       onEditingControlDeleteClick: function () {
-        console.log('deleting')
       },
       editName: function (event) {
-        console.log(event)
       }
     }
   }

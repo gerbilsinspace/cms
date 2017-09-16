@@ -91,9 +91,9 @@
         let values = val.val()
 
         if (!values) {
-          values = {}
-          console.log(values)
           const controls = this.contentType.controls
+
+          values = {}
 
           for (var i = 0; i < controls.length; i++) {
             const control = controls[i]
@@ -113,7 +113,6 @@
         this.$bindAsObject('controls', db.ref('draft').child(auth.currentUser.uid))
       },
       onInputChange: function (label, val) {
-        console.log(val)
         this.controls[label] = val
       }
     },
