@@ -58,7 +58,7 @@
         let matchedContentType = false
 
         for (var i = 0; i < contentTypes.length; i++) {
-          if (contentTypes[i].name.toLowerCase() === this.name.toLowerCase().replace(' ', '')) {
+          if (contentTypes[i].name.toLowerCase() === this.name.toLowerCase()) {
             matchedContentType = true
           }
         }
@@ -74,8 +74,8 @@
         }
 
         if (this.error === '') {
-          const nameCleaned = this.name.toLowerCase().replace(' ', '')
-
+          const nameCleaned = this.name.toLowerCase()
+          console.log(this.name, nameCleaned)
           this.$firebaseRefs.contentTypes.child(nameCleaned).update({
             name: this.name,
             oneOff: this.oneOff === 'true'
