@@ -43,6 +43,10 @@
   }
   li {
     float: left;
+    height: 150px;
+    width: 150px;
+    vertical-align: middle;
+    text-align: center;
   }
 }
 

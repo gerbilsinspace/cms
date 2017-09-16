@@ -141,3 +141,9 @@
     }
   }
 </script>
+
+<style lang='less'>
+.el-select {
+  display: block;
+}
+</style>
