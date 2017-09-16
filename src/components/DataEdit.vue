@@ -34,9 +34,9 @@
             >
               <el-option
                 v-for='image in images'
-                :key='image.name'
+                :key='image[".key"]'
                 :label='image.name'
-                :value='image.downloadURLs[0]'
+                :value='image.fullPath'
               />
             </el-select>
             <el-input
@@ -64,6 +64,7 @@
     name: 'DataEdit',
     data: function () {
       return {
+        images: [],
         error: '',
         controls: {}
       }

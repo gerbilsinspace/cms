@@ -1,5 +1,6 @@
 <template>
   <ul class="image-choice">
+    {{ images }}
     <li
       v-for="image in images"
       :value='image.name'
@@ -16,7 +17,7 @@
   import { db } from '@/firebase.js'
 
   export default {
-    name: 'ImageList',
+    name: 'ImageChoice',
     firebase: function () {
       return {
         images: db.ref('images/')

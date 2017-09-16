@@ -35,8 +35,6 @@
       handleUpload: function (data) {
         const storageRef = storage.ref()
         const imageRef = storageRef.child('images/' + data.file.name)
-        const cleanName = data.file.name.replace('.', '')
-        const referenceRef = db.ref('images/' + cleanName)
 
         imageRef.put(data.file).then(function (snapshot) {
           const metadataKeys = Object.keys(snapshot.metadata)
@@ -46,7 +44,10 @@
             metadata[metadataKeys[i]] = snapshot.metadata[metadataKeys[i]] || ''
           }
 
-          referenceRef.update(metadata).then(function () {
+          db.ref('images').push({
+            name: metadata.name,
+            fullPath: metadata.fullPath
+          }).then(() => {
             data.onSuccess()
           })
         })

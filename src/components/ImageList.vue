@@ -6,8 +6,8 @@
       <div>
         <h2>List of Images</h2>
         <ul class="image-list">
-          <li v-for="image in images">
-            <img style="max-width: 150px; max-height: 150px" :src="image.downloadURLs[0]" />
+          <li v-for='url in imageURLs'>
+            <img :src='url' />
           </li>
         </ul>
       </div>
@@ -16,19 +16,48 @@
 </template>
 
 <script>
-  import { db } from '@/firebase.js'
+  import { db, storage } from '@/firebase.js'
   import ImageCreate from '@/components/ImageCreate'
   import Sidebar from '@/components/Sidebar'
 
   export default {
     name: 'ImageList',
+    data: function () {
+      return {
+        imageURLs: [],
+        readyCounter: 0
+      }
+    },
+    watch: {
+    },
     components: {
       Sidebar,
       ImageCreate
     },
     firebase: function () {
       return {
-        images: db.ref('images/')
+        images: {
+          source: db.ref('images/'),
+          readyCallback: this.isReady()
+        }
+      }
+    },
+    methods: {
+      isReady: function () {
+        this.$nextTick(function () {
+          let urls = []
+          for (var i = 0; i < this.images.length; i++) {
+            const fullPath = this.images[i].fullPath
+
+            storage.ref(fullPath).getDownloadURL().then((url) => {
+              urls.push(url)
+
+              if (i === this.images.length) {
+                this.imageURLs = urls
+              }
+            })
+          }
+        })
       }
     }
   }
@@ -47,6 +76,10 @@
     width: 150px;
     vertical-align: middle;
     text-align: center;
+
+    img {
+      width: 100%;
+    }
   }
 }
 
