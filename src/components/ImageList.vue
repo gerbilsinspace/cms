@@ -25,10 +25,8 @@
     data: function () {
       return {
         imageURLs: [],
-        readyCounter: 0
+        imagesReady: false
       }
-    },
-    watch: {
     },
     components: {
       Sidebar,
@@ -38,26 +36,26 @@
       return {
         images: {
           source: db.ref('images/'),
-          readyCallback: this.isReady()
+          readyCallback: function () {
+            this.imagesReady = true
+          }
         }
       }
     },
-    methods: {
-      isReady: function () {
-        this.$nextTick(function () {
-          let urls = []
-          for (var i = 0; i < this.images.length; i++) {
-            const fullPath = this.images[i].fullPath
+    watch: {
+      imagesReady: function () {
+        let urls = []
+        for (var i = 0; i < this.images.length; i++) {
+          const fullPath = this.images[i].fullPath
 
-            storage.ref(fullPath).getDownloadURL().then((url) => {
-              urls.push(url)
+          storage.ref(fullPath).getDownloadURL().then((url) => {
+            urls.push(url)
 
-              if (i === this.images.length) {
-                this.imageURLs = urls
-              }
-            })
-          }
-        })
+            if (i === this.images.length) {
+              this.imageURLs = urls
+            }
+          })
+        }
       }
     }
   }
