@@ -50,7 +50,7 @@
   main {
     padding: 20px;
     float: left;
-    width: calc(100vw - 240px);
+    width: calc(100vw - 260px);
   }
 
   aside {
@@ -58,6 +58,8 @@
     width: 200px;
     background-color: #324157;
     height: calc(100vh - 60px);
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   aside a {

@@ -48,6 +48,13 @@
               :value="controls[control.label]"
               @input='onInputChange(control.label, $event)'
             />
+            <el-input-number
+              v-if='control.controlType === "number"'
+              :id="control.label"
+              :data-name="control.label"
+              :value="controls[control.label]"
+              @input='onInputChange(control.label, $event)'
+            />
           </div>
         </li>
       </ul>

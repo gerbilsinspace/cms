@@ -21,13 +21,16 @@
             <div v-on:click="onSingleTextClick">Text</div>
           </el-menu-item>
           <el-menu-item index="5">
-            <div v-on:click="onSwitchClick">Switch</div>
+            <div v-on:click="onParagraphClick">Paragraph</div>
           </el-menu-item>
           <el-menu-item index="6">
-            <div v-on:click="onImagesClick">Images</div>
+            <div v-on:click="onNumberClick">Number</div>
           </el-menu-item>
           <el-menu-item index="7">
-            <div v-on:click="onParagraphClick">Paragraph</div>
+            <div v-on:click="onSwitchClick">Switch</div>
+          </el-menu-item>
+          <el-menu-item index="8">
+            <div v-on:click="onImagesClick">Images</div>
           </el-menu-item>
         </el-menu-item-group>
       </el-menu>
@@ -49,9 +52,10 @@
               <div class="control-overlay" :data-label="control.label" v-on:click="onControlClick"></div>
               <label :for="control.label">{{ control.label }}</label>
               <el-input v-if='control.controlType === "textfield"' :id="control.label" />
+              <el-input v-if='control.controlType === "paragraph"' type="textarea" autosize :id="control.label" />
+              <el-input-number v-if='control.controlType === "number"' :id='control.label' />
               <el-switch v-if='control.controlType === "switch"' :id="control.label" />
               <el-select v-if='control.controlType === "images"' :id="control.label" filterable :placeholder="control.label" />
-              <el-input v-if='control.controlType === "paragraph"' type="textarea" autosize :id="control.label" />
             </div>
           </li>
         </ul>
@@ -179,6 +183,9 @@
       },
       onParagraphClick: function () {
         this.createNewControl('paragraph')
+      },
+      onNumberClick: function () {
+        this.createNewControl('number')
       },
       createNewControl: function (controlType) {
         const newControl = {
