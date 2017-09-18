@@ -35,7 +35,9 @@
           <el-menu-item index="9">
             <div v-on:click="onDatePickerClick">Date / Time</div>
           </el-menu-item>
-
+          <el-menu-item index="10">
+            <div v-on:click="onColorPickerClick">Colour</div>
+          </el-menu-item>
         </el-menu-item-group>
       </el-menu>
     </aside>
@@ -61,6 +63,7 @@
               <el-date-picker v-if='control.controlType === "datetime"' :id='control.label' />
               <el-switch v-if='control.controlType === "switch"' :id="control.label" />
               <el-select v-if='control.controlType === "images"' :id="control.label" filterable :placeholder="control.label" />
+              <el-color-picker v-if='control.controlType === "color"' :id="control.label" />
             </div>
           </li>
         </ul>
@@ -194,6 +197,9 @@
       },
       onDatePickerClick: function () {
         this.createNewControl('datetime')
+      },
+      onColorPickerClick: function () {
+        this.createNewControl('color')
       },
       createNewControl: function (controlType) {
         const newControl = {
