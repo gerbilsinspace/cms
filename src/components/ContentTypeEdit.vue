@@ -38,6 +38,9 @@
           <el-menu-item index="10">
             <div v-on:click="onColorPickerClick">Colour</div>
           </el-menu-item>
+          <el-menu-item index="11">
+            <div v-on:click="onRatingClick">Rating</div>
+          </el-menu-item>
         </el-menu-item-group>
       </el-menu>
     </aside>
@@ -64,6 +67,7 @@
               <el-switch v-if='control.controlType === "switch"' :id="control.label" />
               <el-select v-if='control.controlType === "images"' :id="control.label" filterable :placeholder="control.label" />
               <el-color-picker v-if='control.controlType === "color"' :id="control.label" />
+              <el-rate v-if='control.controlType === "rate"' :id="control.label" />
             </div>
           </li>
         </ul>
@@ -200,6 +204,9 @@
       },
       onColorPickerClick: function () {
         this.createNewControl('color')
+      },
+      onRatingClick: function () {
+        this.createNewControl('rate')
       },
       createNewControl: function (controlType) {
         const newControl = {

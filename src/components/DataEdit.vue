@@ -70,6 +70,13 @@
               :value='controls[control.label]'
               @input='onInputChange(control.label, $event)'
             />
+            <el-rate
+              v-if='control.controlType === "rate"'
+              :id='control.label'
+              :data-name='control.label'
+              :value='controls[control.label]'
+              @input='onInputChange(control.label, $event)'
+            />
           </div>
         </li>
       </ul>
