@@ -55,6 +55,14 @@
               :value="controls[control.label]"
               @input='onInputChange(control.label, $event)'
             />
+            <el-date-picker
+              v-if='control.controlType === "datetime"'
+              :id="control.label"
+              :data-name="control.label"
+              type='datetime'
+              :value="controls[control.label]"
+              @input='onInputChange(control.label, $event)'
+            />
           </div>
         </li>
       </ul>

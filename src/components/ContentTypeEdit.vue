@@ -32,6 +32,10 @@
           <el-menu-item index="8">
             <div v-on:click="onImagesClick">Images</div>
           </el-menu-item>
+          <el-menu-item index="9">
+            <div v-on:click="onDatePickerClick">Date / Time</div>
+          </el-menu-item>
+
         </el-menu-item-group>
       </el-menu>
     </aside>
@@ -54,6 +58,7 @@
               <el-input v-if='control.controlType === "textfield"' :id="control.label" />
               <el-input v-if='control.controlType === "paragraph"' type="textarea" autosize :id="control.label" />
               <el-input-number v-if='control.controlType === "number"' :id='control.label' />
+              <el-date-picker v-if='control.controlType === "datetime"' :id='control.label' />
               <el-switch v-if='control.controlType === "switch"' :id="control.label" />
               <el-select v-if='control.controlType === "images"' :id="control.label" filterable :placeholder="control.label" />
             </div>
@@ -186,6 +191,9 @@
       },
       onNumberClick: function () {
         this.createNewControl('number')
+      },
+      onDatePickerClick: function () {
+        this.createNewControl('datetime')
       },
       createNewControl: function (controlType) {
         const newControl = {
