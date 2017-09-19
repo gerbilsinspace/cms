@@ -28,7 +28,6 @@
               v-if='control.controlType === "images"'
               :id='control.label'
               multiple
-              :placeholder='control.label'
               :value='controls[control.label]'
               @input='onInputChange(control.label, $event)'
             >
@@ -63,6 +62,7 @@
               :value="controls[control.label]"
               @input='onInputChange(control.label, $event)'
             />
+            {{ controls[control.label] }}
             <el-color-picker
               v-if='control.controlType === "color"'
               :id="control.label"
@@ -95,7 +95,8 @@
       return {
         images: [],
         error: '',
-        controls: {}
+        controls: {},
+        dataLoaded: 0
       }
     },
     components: {
@@ -103,6 +104,51 @@
       ImageChoice
     },
     methods: {
+      populateData: function () {
+        const inputData = this.inputData
+        const controls = this.contentType.controls
+
+        let shouldSave = false
+
+        delete inputData['.key']
+        delete inputData['.value']
+
+        controls.forEach((control) => {
+          let controlFound = false
+
+          Object.keys(inputData).forEach((item) => {
+            if (control.label === item) {
+              controlFound = true
+            }
+          })
+
+          if (!controlFound) {
+            shouldSave = true
+            switch (control.controlType) {
+              case 'images':
+                inputData[control.label] = []
+                break
+              case 'number':
+              case 'rate':
+                inputData[control.label] = 0
+                break
+              default:
+                inputData[control.label] = ''
+                break
+            }
+          }
+        })
+
+        if (shouldSave) {
+          if (this.$route.params.dataId) {
+            db.ref('data/' + this.$route.params.contentTypeId + '/' + this.$route.params.dataId).update(inputData)
+          } else {
+            db.ref('data/' + this.$route.params.contentTypeId).update(inputData)
+          }
+        }
+
+        this.controls = inputData
+      },
       onSaveClick: function () {
         let controls = this.controls
         delete controls['.key']
@@ -116,31 +162,6 @@
           this.$router.push('/')
           db.ref('draft/' + auth.currentUser.uid).remove()
         }
-      },
-      inputDataReady: function (val) {
-        let values = val.val()
-
-        if (!values) {
-          const controls = this.contentType.controls
-
-          values = {}
-
-          for (var i = 0; i < controls.length; i++) {
-            const control = controls[i]
-            let draftValue = ''
-
-            if (control.controlType === 'switch') {
-              draftValue = false
-            }
-
-            values[control.label] = (draftValue)
-          }
-        }
-        const draft = db.ref('/draft/' + auth.currentUser.uid)
-
-        draft.set(values)
-
-        this.$bindAsObject('controls', db.ref('draft').child(auth.currentUser.uid))
       },
       onInputChange: function (label, val) {
         this.controls[label] = val
@@ -156,15 +177,30 @@
       return {
         contentType: {
           source: db.ref('contentType/' + this.$route.params.contentTypeId),
-          asObject: true
+          asObject: true,
+          readyCallback: function () {
+            this.dataLoaded = this.dataLoaded + 1
+          }
         },
         inputData: {
           source: db.ref(inputDataSource),
           asObject: true,
-          readyCallback: this.inputDataReady
+          readyCallback: function () {
+            this.dataLoaded = this.dataLoaded + 1
+          }
         },
         images: {
-          source: db.ref('images')
+          source: db.ref('images'),
+          readyCallback: function () {
+            this.dataLoaded = this.dataLoaded + 1
+          }
+        }
+      }
+    },
+    watch: {
+      dataLoaded: function () {
+        if (this.dataLoaded === 3) {
+          this.populateData()
         }
       }
     }
