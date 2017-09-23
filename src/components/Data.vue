@@ -2,16 +2,10 @@
   <div>
     <Sidebar />
     <main>
-      <div v-if='contentType.name'>
+      <div v-if='contentType && contentType.name'>
         <DataEdit
           v-if='contentType.oneOff'
           :title='contentType.name'
-          :onSaveClick='onEditSaveClick'
-          :onInputChange='onEditInputChange'
-          :onInputFocus='onEditInputFocus'
-          :onInputBlur='onEditInputBlur'
-          :contentType='contentType'
-          :inputData='firebaseData'
         />
         <div v-else>
           <h1>{{ contentType.name }}</h1>
@@ -35,11 +29,12 @@
 </template>
 
 <script>
-  import { db } from '@/firebase.js'
-  import { router } from '@/router/index.js'
-
+  import { mapState } from 'vuex'
+  import { db } from '@/firebase'
+  import { router } from '@/router/index'
   import Sidebar from '@/components/Sidebar'
   import DataEdit from '@/components/DataEdit'
+
   export default {
     name: 'Data',
     data: function () {
@@ -54,52 +49,40 @@
       Sidebar,
       DataEdit
     },
-    firebase: function () {
-      return {
-        contentType: {
-          source: db.ref('contentType/' + this.$route.params.contentTypeId),
-          asObject: true
-        },
-        firebaseData: {
-          source: db.ref('data/' + this.$route.params.contentTypeId),
-          asObject: true
-        },
-        dataList: {
-          source: db.ref('data/' + this.$route.params.contentTypeId)
-        }
+    computed: mapState({
+      contentType: function (state) {
+        return (state.contentTypes[this.$route.params.contentTypeId])
+      },
+      dataList: function (state) {
+        return (state.data[this.$route.params.contentTypeId])
       }
-    },
+    }),
     methods: {
-      onEditSaveClick: function () {
-        const keys = Object.keys(this.inputData)
-        let data = {}
-
-        for (var i = 0; i < keys.length; i++) {
-          const key = keys[i]
-          data[key] = this.inputData[key]
+      onCreateSaveClick: function () {
+        let data = {
+          id: this.createInputData
         }
 
-        db.ref('data/' + this.$route.params.contentTypeId).update(data)
-      },
-      onEditInputChange: function (val) {
-        this.$set(this.inputData, this.focussedElement, val)
-      },
-      onEditInputBlur: function () {
-        this.focussedElement = ''
-      },
-      onEditInputFocus: function (e) {
-        this.focussedElement = e.path[1].dataset.name
-      },
-      onCreateSaveClick: function () {
-        db.ref('data/' + this.$route.params.contentTypeId + '/' + this.createInputData).update({
-          id: this.createInputData
-        }).catch((e) => {
-          this.error = e
-        }).then(() => {
-          router.push('/data/' + this.$route.params.contentTypeId + '/' + this.createInputData)
+        for (var control of this.contentType.controls) {
+          switch (control.controlType) {
+            case 'images':
+              data[control.label] = ['']
+              break
+            case 'number':
+            case 'rate':
+              data[control.label] = 0
+              break
+            default:
+              data[control.label] = ''
+              break
+          }
+        }
 
-          this.createInputData = ''
-        })
+        db.ref('/data/' + this.$route.params.contentTypeId + '/' + this.createInputData)
+          .update(data).then(() => {
+            router.push('/data/' + this.$route.params.contentTypeId + '/' + this.createInputData)
+            this.createInputData = ''
+          })
       },
       onLinkClick: function (element) {
         router.push('/data/' + this.$route.params.contentTypeId + '/' + element.path[1].dataset.id)

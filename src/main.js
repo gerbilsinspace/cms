@@ -5,8 +5,10 @@ import VueFire from 'vuefire'
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-default/index.css'
-import App from './App'
-import router from './router'
+import App from '@/App'
+import router from '@/router'
+import store from '@/store'
+import { db } from '@/firebase'
 
 Vue.config.productionTip = false
 
@@ -17,6 +19,12 @@ Vue.use(ElementUI, { locale })
 new Vue({
   el: '#app',
   router,
+  store,
+  created: function () {
+    this.$store.dispatch('setDataRef', db.ref('data'))
+    this.$store.dispatch('setContentTypeRef', db.ref('contentType'))
+    this.$store.dispatch('setImageDataRef', db.ref('images'))
+  },
   template: '<App />',
   components: { App }
 })
