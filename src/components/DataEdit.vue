@@ -62,7 +62,6 @@
               :value="controls[control.label]"
               @input='onInputChange(control.label, $event)'
             />
-            {{ controls[control.label] }}
             <el-color-picker
               v-if='control.controlType === "color"'
               :id="control.label"
