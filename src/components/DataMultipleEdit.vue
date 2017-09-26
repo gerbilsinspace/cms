@@ -7,18 +7,18 @@
       <v-btn primary v-on:click='onSaveClick'>Save</v-btn>
     </v-flex>
     <v-flex v-for='item in dataset' :key='item.name'>
-      <v-text-field
+      <label v-if='item.type !== "images"'>{{item.name}}</label>
+      <br />
+      <el-input
         v-if='item.type === "text"'
-        :label='item.name'
         :name='item.name'
         v-model='item.value'
       />
-      <v-text-field
+      <el-input
         v-if='item.type === "paragraph"'
-        :label='item.name'
         :name='item.name'
         v-model='item.value'
-        multi-line
+        type='textarea'
       />
       <el-input-number
         v-if='item.type === "number"'
@@ -34,7 +34,21 @@
         @input='onDateTimeChange(item, $event)'
         type='datetime'
       />
-
+      <el-color-picker
+        v-if='item.type === "color"'
+        v-model='item.value'
+      />
+      <v-select
+        v-if='item.type === "images"'
+        :items='images'
+        v-model='item.value'
+        :label='item.name'
+        multiple
+      />
+      <el-rate
+        v-if='item.type === "rate"'
+        v-model='item.value'
+      />
     </v-flex>
   </v-layout>
 </template>
@@ -60,6 +74,17 @@ export default {
     },
     dataset () {
       return this.item.dataset
+    },
+    images () {
+      const imageData = this.$store.getters.getImageData
+      let images = []
+
+      for (let key in imageData) {
+        const image = imageData[key]
+        images.push({ text: image.name })
+      }
+
+      return images
     }
   },
   methods: {
