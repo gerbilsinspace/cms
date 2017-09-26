@@ -24,6 +24,7 @@
                 <v-list-tile-content
                   v-on:click='addControl'
                   :data-type='control.type'
+                  :data-default='control.defaultValue'
                   style='cursor: pointer'
                 >
                   <v-list-tile-title>{{ control.label }}</v-list-tile-title>
@@ -74,14 +75,14 @@ export default {
       tabMode: 'Create',
       controlId: null,
       controls: [
-        { type: 'text', label: 'Text' },
-        { type: 'paragraph', label: 'Paragraph' },
-        { type: 'number', label: 'Number' },
-        { type: 'switch', label: 'Switch' },
-        { type: 'date-time', label: 'Date / Time' },
-        { type: 'color', label: 'Colour' },
-        { type: 'images', label: 'Images' },
-        { type: 'rate', label: 'Rating' }
+        { type: 'text', label: 'Text', defaultValue: '' },
+        { type: 'paragraph', label: 'Paragraph', defaultValue: '' },
+        { type: 'number', label: 'Number', defaultValue: 0 },
+        { type: 'switch', label: 'Switch', defaultValue: false },
+        { type: 'date-time', label: 'Date / Time', defaultValue: 0 },
+        { type: 'color', label: 'Colour', defaultValue: 0 },
+        { type: 'images', label: 'Images', defaultValue: [] },
+        { type: 'rate', label: 'Rating', defaultValue: 0 }
       ],
       text: '',
       alert: false
@@ -129,6 +130,7 @@ export default {
       this.controlsToAdd.push({
         name: 'Unnamed',
         type: event.path[1].dataset.type,
+        defaultValue: event.path[1].dataset.default,
         id
       })
 

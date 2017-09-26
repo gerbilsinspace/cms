@@ -38,47 +38,39 @@ export default {
   methods: {
     onOneOffClick (event) {
       const name = event.path[1].dataset.name
-      const data = this.data[name]
+      const data = this.data[name] || {dataset: []}
+      let dataset = data.dataset
       const controls = this.contentTypes[name].controls
+      const missingControls = []
 
-      if (!data) {
-        let dataset = []
+      for (let control of controls) {
+        let hasData = false
 
-        for (let control of controls) {
-          let value = ''
-
-          switch (control.type) {
-            case 'number':
-            case 'date-time':
-            case 'rate':
-              value = 0
-              break
-            case 'switch':
-              value = false
-              break
-            case 'images':
-              value = []
-              break
-            default:
-              break
+        for (let item of dataset) {
+          if (control.name === item.name) {
+            hasData = true
           }
-
-          dataset.push({
-            type: control.type,
-            value,
-            name: control.name
-          })
         }
 
-        firebase.database().ref('data/' + name).set({
-          dataset,
-          name
-        }).then(() => {
-          router.push('/data/edit/' + name)
-        })
-      } else {
-        router.push('/data/edit/' + name)
+        if (!hasData) {
+          missingControls.push({
+            name: control.name,
+            value: control.defaultValue,
+            type: control.type
+          })
+        }
       }
+
+      // TODO: support removing of controls
+
+      dataset = [ ...dataset, ...missingControls ]
+
+      firebase.database().ref('data/' + name).set({
+        dataset,
+        name
+      }).then(() => {
+        router.push('/data/edit/' + name)
+      })
     },
 
     onMultipleClick (event) {

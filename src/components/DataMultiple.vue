@@ -101,23 +101,9 @@ export default {
         let dataset = []
 
         for (let control of controls) {
-          let value = ''
-
-          switch (control.type) {
-            case 'number':
-            case 'date-time':
-              value = 0
-              break
-            case 'switch':
-              value = false
-              break
-            default:
-              break
-          }
-
           dataset.push({
             type: control.type,
-            value,
+            value: control.defaultValue,
             name: control.name
           })
         }
