@@ -1,30 +1,36 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import VueFire from 'vuefire'
+import Vuetify from 'vuetify'
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
+import firebase from 'firebase'
+import './stylus/main.styl'
 import 'element-ui/lib/theme-default/index.css'
-import App from '@/App'
-import router from '@/router'
-import store from '@/store'
-import { db } from '@/firebase'
+import App from './App'
+import router from './router'
+import { store } from './store'
+import { firebaseConfig } from './config'
+
+Vue.use(Vuetify)
+Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
-Vue.use(VueFire)
-Vue.use(ElementUI, { locale })
+firebase.initializeApp(firebaseConfig)
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  created: function () {
-    this.$store.dispatch('setDataRef', db.ref('data'))
-    this.$store.dispatch('setContentTypeRef', db.ref('contentType'))
-    this.$store.dispatch('setImageDataRef', db.ref('images'))
-  },
-  template: '<App />',
-  components: { App }
+const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    render: h => h(App),
+    created () {
+      store.dispatch('autoSignIn', firebaseUser)
+      store.dispatch('watchContentTypes')
+      store.dispatch('watchImageData')
+      store.dispatch('watchData')
+    }
+  })
+
+  unsubscribe()
 })

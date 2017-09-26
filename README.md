@@ -1,6 +1,6 @@
 # cms
 
-> A Simple Vue CMS
+> A Vue.js project
 
 ## Build Setup
 

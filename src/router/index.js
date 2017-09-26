@@ -1,120 +1,53 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import firebase from 'firebase'
 
-import ContentTypeCreate from '@/components/ContentTypeCreate'
-import ContentTypeEdit from '@/components/ContentTypeEdit'
-import Dashboard from '@/components/Dashboard'
-import Data from '@/components/Data'
-import DataEdit from '@/components/DataEdit'
-import ImageList from '@/components/ImageList'
-import Login from '@/components/Login'
-import PageMissing from '@/components/PageMissing'
-import Profile from '@/components/Profile'
-import Register from '@/components/Register'
+import NotFound from '@/components/NotFound'
 
-import { auth } from '@/firebase'
+const routerOptions = [
+  { path: '/', component: 'Landing', meta: { requiresUnauth: true } },
+  { path: '/signin', component: 'Signin' },
+  { path: '/signup', component: 'Signup' },
+  { path: '/home', component: 'Home', meta: { requiresAuth: true } },
+  { path: '/data', component: 'Data', meta: { requiresAuth: true } },
+  { path: '/data/edit/:dataId', component: 'DataSingleEdit', meta: { requiresAuth: true } },
+  { path: '/data/:dataId', component: 'DataMultiple', meta: { requiresAuth: true } },
+  { path: '/data/:dataId/:dataItemId', component: 'DataMultipleEdit', meta: { requiresAuth: true } },
+  { path: '/images', component: 'Images', meta: { requiresAuth: true } },
+  { path: '/content-types', component: 'ContentTypes', meta: { requiresAuth: true } },
+  { path: '/content-types/:contentTypeId', component: 'ContentTypeEdit', meta: { requiresAuth: true } }
+]
+
+const routes = routerOptions.map(route => ({
+  path: route.path,
+  component: () => import(`@/components/${route.component}`),
+  meta: route.meta
+}))
 
 Vue.use(Router)
 
-const routesToRedirectIfLoggedOut = [
-  '/',
-  '/content-types',
-  '/content-types/:contentTypeId',
-  '/data/:contentTypeId',
-  '/data/:contentTypeId/:dataId',
-  '/images',
-  '/profile'
-]
-
-const routesToRedirectIfLoggedIn = [
-  '/login',
-  '/register'
-]
-
-export const router = new Router({
+const router = new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },
-    {
-      path: '/content-types',
-      name: 'ContentTypeCreate',
-      component: ContentTypeCreate
-    },
-    {
-      path: '/content-types/:contentTypeId',
-      name: 'ContentTypeEdit',
-      component: ContentTypeEdit
-    },
-    {
-      path: '/data/:contentTypeId',
-      name: 'Data',
-      component: Data
-    },
-    {
-      path: '/data/:contentTypeId/:dataId',
-      name: 'DataEdit',
-      component: DataEdit
-    },
-    {
-      path: '/images',
-      name: 'ImageList',
-      component: ImageList
-    },
-    {
-      path: '/profile',
-      name: 'Profile',
-      component: Profile
-    },
-    {
-      path: '/',
-      name: 'Dashboard',
-      component: Dashboard
-    },
-    {
-      path: '*',
-      name: 'PageMissing',
-      component: PageMissing
-    }
+    ...routes,
+    { path: '*', component: NotFound }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  auth.onAuthStateChanged(function (user) {
-    let redirectToLogin = false
-    for (var i = 0; i < routesToRedirectIfLoggedOut.length; i++) {
-      const route = routesToRedirectIfLoggedOut[i]
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const requiresUnauth = to.matched.some(record => record.meta.requiresUnauth)
+  const user = firebase.auth().currentUser
 
-      if (!user && to.path === route) {
-        redirectToLogin = true
-      }
-    }
+  if (requiresAuth && !user) {
+    next('/signin')
+  }
 
-    let redirectToDashboard = false
-    for (var j = 0; j < routesToRedirectIfLoggedIn.length; j++) {
-      const route = routesToRedirectIfLoggedIn[j]
+  if (requiresUnauth && user) {
+    next('/home')
+  }
 
-      if (user && to.path === route) {
-        redirectToDashboard = true
-      }
-    }
-
-    if (redirectToLogin) {
-      next('/login')
-    } else if (redirectToDashboard) {
-      next('/')
-    } else {
-      next()
-    }
-  })
+  next()
 })
 
 export default router
