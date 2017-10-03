@@ -74,7 +74,7 @@ export default {
 
       for (let key in imageData) {
         const image = imageData[key]
-        images.push({ text: image.name })
+        images.push({ text: image })
       }
 
       return images

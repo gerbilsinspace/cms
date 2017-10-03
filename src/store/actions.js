@@ -69,10 +69,12 @@ export const actions = {
       .child('images/' + payload.file.name)
 
     imageRef.put(payload.file).then(function (snapshot) {
-      payload.onSuccess()
-      firebase.database().ref('images').push({
-        name: snapshot.metadata.name,
-        fullPath: snapshot.metadata.fullPath
+      const postKey = firebase.database().ref('images').push().key
+      let postUpdate = {}
+
+      postUpdate[postKey] = 'https://storage.googleapis.com/abell-design.appspot.com/' + snapshot.metadata.fullPath
+      firebase.database().ref('images').update(postUpdate).then(() => {
+        payload.onSuccess()
       })
     })
   },

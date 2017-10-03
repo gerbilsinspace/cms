@@ -15,26 +15,18 @@
       </el-upload>
     </v-flex>
 
-    <v-flex v-for='url in urls' :key='url'>
-      <img :src='url' style='height: 200px; display: block; margin: 0 auto;' />
+    <v-flex v-for='image in images' :key='image'>
+      <img :src='image' style='height: 200px; display: block; margin: 0 auto;' />
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import firebase from 'firebase'
-
 export default {
   data () {
     return {
       multiple: true,
-      fileList: [],
-      urls: []
-    }
-  },
-  created () {
-    if (this.images.length !== this.urls.length) {
-      this.downloadImages()
+      fileList: []
     }
   },
   computed: {
@@ -56,21 +48,6 @@ export default {
   methods: {
     uploadFile (data) {
       this.$store.dispatch('uploadImage', data)
-    },
-    downloadImages () {
-      let urls = []
-
-      for (var i = 0; i < this.images.length; i++) {
-        const fullPath = this.images[i].fullPath
-
-        firebase.storage().ref(fullPath).getDownloadURL().then((url) => {
-          urls.push(url)
-
-          if (i === this.images.length) {
-            this.urls = urls
-          }
-        })
-      }
     }
   },
   watch: {
