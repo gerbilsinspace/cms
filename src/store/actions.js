@@ -72,7 +72,7 @@ export const actions = {
       const postKey = firebase.database().ref('images').push().key
       let postUpdate = {}
 
-      postUpdate[postKey] = 'https://storage.googleapis.com/abell-design.appspot.com/' + snapshot.metadata.fullPath
+      postUpdate[postKey] = 'https://storage.googleapis.com/' + process.env.FIREBASE_STORAGE_BUCKET + '/' + snapshot.metadata.fullPath
       firebase.database().ref('images').update(postUpdate).then(() => {
         payload.onSuccess()
       })
