@@ -60,13 +60,19 @@ export default {
     name () {
       return this.$route.params.dataId
     },
-    data () {
-      return this.$store.getters.getData[this.name] || {
-        dataset: {}
-      }
-    },
     dataset () {
-      return this.data.dataset
+      const data = this.$store.getters.getData[this.name] || {}
+      const keys = Object.keys(data)
+      let dataset = {}
+
+      for (let key of keys) {
+        dataset[key] = {
+          name: key,
+          ...data[key]
+        }
+      }
+
+      return dataset
     },
     images () {
       const imageData = this.$store.getters.getImageData
@@ -82,7 +88,10 @@ export default {
   },
   methods: {
     onSaveClick () {
-      this.$store.dispatch('setItemData', this.data)
+      this.$store.dispatch('setItemData', {
+        dataset: this.dataset,
+        name: this.name
+      })
     },
     onDateTimeChange (item, event) {
       item.value = event.getTime()

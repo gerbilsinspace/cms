@@ -31,12 +31,12 @@
         </v-layout>
       </form>
     </v-flex>
-    <v-flex v-for='item in items' :key='item.name'>
+    <v-flex v-for='key in Object.keys(items)' :key='key'>
       <v-btn
         primary
         v-on:click='onButtonClick'
-        :data-name='item.name'
-      >{{item.name}}</v-btn>
+        :data-name='key'
+      >{{key}}</v-btn>
     </v-flex>
   </v-layout>
 </template>
@@ -96,31 +96,18 @@ export default {
       }
 
       const controls = this.contentType.controls
+      let items = this.data.items || {}
+      let item = items[this.itemName] || {}
 
-      if (!this.data.controls) {
-        let dataset = []
-
-        for (let control of controls) {
-          dataset.push({
-            type: control.type,
-            value: control.defaultValue,
-            name: control.name
-          })
+      for (let control of controls) {
+        item[control.name] = item[control.name] || {}
+        item[control.name] = {
+          type: item[control.name].type || control.type,
+          value: item[control.name].value || control.defaultValue
         }
-
-        firebase
-          .database()
-          .ref('data/' + this.name + '/items/' + this.itemName)
-          .set({
-            dataset,
-            name: this.itemName
-          })
-          .then(() => {
-            router.push('/data/' + this.name + '/' + this.itemName)
-          })
-      } else {
-        router.push('/data/' + this.name + '/' + this.itemName)
       }
+
+      firebase.database().ref('/data/' + this.name + '/items/' + this.itemName).update(item)
     },
     onButtonClick (event) {
       const name = event.path[1].dataset.name

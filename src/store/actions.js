@@ -104,7 +104,7 @@ export const actions = {
     firebase
       .database()
       .ref('data/' + payload.name)
-      .set(payload)
+      .set(payload.dataset)
       .then(() => {
         commit('setLoading', false)
         commit('setError', false)
@@ -116,14 +116,12 @@ export const actions = {
   },
 
   setMultipleItemData ({ commit }, payload) {
+    console.log(payload)
     commit('setLoading', true)
     firebase
       .database()
       .ref('data/' + payload.name + '/items/' + payload.itemName)
-      .set({
-        dataset: payload.dataset,
-        name: payload.itemName
-      })
+      .set(payload.dataset)
       .then(() => {
         commit('setLoading', false)
         commit('setError', false)

@@ -67,13 +67,19 @@ export default {
         items: {}
       }
     },
-    item () {
-      return this.items.items[this.$route.params.dataItemId] || {
-        dataset: {}
-      }
-    },
     dataset () {
-      return this.item.dataset
+      const item = this.items.items[this.$route.params.dataItemId] || {}
+      const names = Object.keys(item) || []
+      let data = {}
+
+      for (let name of names) {
+        data[name] = {
+          name,
+          ...item[name]
+        }
+      }
+
+      return data
     },
     images () {
       const imageData = this.$store.getters.getImageData
