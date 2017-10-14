@@ -130,5 +130,35 @@ describe('ContentTypeEdit', () => {
         id: 1
       })
     })
+
+    it('should set up the newly added control to edit', () => {
+      const event = { path: [ {}, { dataset: {
+        default: '',
+        type: 'text'
+      }}]}
+
+      wrapper.setData({
+        text: 'guff',
+        tabMode: 'Create',
+        controlId: null
+      })
+
+      wrapper = shallow(ContentTypeEdit, {
+        store,
+        mocks: {
+          $route
+        },
+        attachToDocument: true
+      })
+
+      expect(wrapper.vm.text).toEqual('')
+      expect(wrapper.vm.tabMode).toEqual('Create')
+      expect(wrapper.vm.controlId).toEqual(null)
+      wrapper.vm.addControl(event)
+
+      expect(wrapper.vm.text).toEqual('Unnamed')
+      expect(wrapper.vm.tabMode).toEqual('Edit')
+      expect(wrapper.vm.controlId).toEqual(1)
+    })
   })
 })
