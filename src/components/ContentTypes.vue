@@ -4,7 +4,7 @@
       <h1>Content Types</h1>
     </v-flex>
     <v-flex xs12 sm6 offset-sm3 mt-3>
-      <form @submit.prevent='createContentType'>
+      <form @submit.prevent='createContentType' id='createContentTypeForm'>
         <v-layout column>
           <v-flex>
             <h2>Create</h2>
@@ -37,7 +37,7 @@
             />
           </v-flex>
           <v-flex>
-            <v-btn primary type='submit' :disabled='loading'>Create</v-btn>
+            <v-btn primary id='createButton' type='submit' :disabled='loading'>Create</v-btn>
           </v-flex>
         </v-layout>
       </form>
