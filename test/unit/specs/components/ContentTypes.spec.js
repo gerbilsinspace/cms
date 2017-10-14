@@ -9,19 +9,10 @@ Vue.use(Vuex)
 
 describe('ContentTypes', () => {
   let wrapper
-  let actions
-  let store
 
   beforeEach(() => {
-    actions = {}
-    store = new Vuex.Store({
-      state: {},
-      actions
-    })
-
     wrapper = shallow(ContentTypes, {
-      attachToDocument: true,
-      store
+      store: new Vuex.Store()
     })
   })
 
@@ -68,7 +59,7 @@ describe('ContentTypes', () => {
 
   describe('has an isNameUnique method that', () => {
     it('returns true if there is no contentTypes that have the same name as the new content type', () => {
-      expect(true).toBe(false)
+      expect('to have tests').toBe(true)
     })
   })
 
