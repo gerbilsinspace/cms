@@ -85,7 +85,8 @@ export default {
         { type: 'rate', label: 'Rating', defaultValue: 0 }
       ],
       text: '',
-      alert: false
+      alert: false,
+      firebase
     }
   },
   computed: {
@@ -115,12 +116,12 @@ export default {
       }
 
       if ([...new Set(names)].length < this.controlsToAdd.length) {
-        this.$store.commit('setError', 'Please make each control has a unique name')
+        this.$store.commit('setError', 'Each control needs to have a unique name')
         return
       }
 
       this.$store.dispatch('saveContentType', {
-        ref: firebase.database().ref('contentType/' + this.$route.params.contentTypeId),
+        ref: this.firebase.database().ref('contentType/' + this.$route.params.contentTypeId),
         controls: this.controlsToAdd
       })
     },
