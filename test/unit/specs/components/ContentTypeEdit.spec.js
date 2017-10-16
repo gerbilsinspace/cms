@@ -52,9 +52,6 @@ describe('ContentTypeEdit', () => {
     }
 
     mutations = {
-      changeError (state, text) {
-        state.error = text
-      }
     }
 
     state = {
@@ -121,7 +118,7 @@ describe('ContentTypeEdit', () => {
 
       wrapper.vm.onSave()
 
-      expect(commit).toHaveBeenCalledWith('changeError', 'Each control needs to have a unique name')
+      expect(commit).toHaveBeenCalledWith('setError', 'Each control needs to have a unique name')
     })
   })
 
