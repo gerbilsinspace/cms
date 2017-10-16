@@ -12,6 +12,8 @@ describe('ContentTypeEdit', () => {
   let store
   let actions
   let getters
+  let mutations
+  let state
   let $route
 
   beforeEach(() => {
@@ -43,12 +45,27 @@ describe('ContentTypeEdit', () => {
             ]
           }
         }
+      },
+      getError: () => {
+        return null
       }
     }
 
+    mutations = {
+      changeError (state, text) {
+        state.error = text
+      }
+    }
+
+    state = {
+      errors: null
+    }
+
     store = new Vuex.Store({
+      state,
       getters,
-      actions
+      actions,
+      mutations
     })
   })
 
@@ -104,7 +121,7 @@ describe('ContentTypeEdit', () => {
 
       wrapper.vm.onSave()
 
-      expect(commit).toHaveBeenCalledWith('setError', 'Each control needs to have a unique name')
+      expect(commit).toHaveBeenCalledWith('changeError', 'Each control needs to have a unique name')
     })
   })
 
@@ -212,6 +229,38 @@ describe('ContentTypeEdit', () => {
       expect(wrapper.vm.text).toEqual('guff')
       expect(wrapper.vm.tabMode).toEqual('Edit')
       expect(wrapper.vm.controlId).toEqual(1)
+    })
+  })
+
+  describe('should have a method that watches changes to text that', () => {
+    it('should update the name of the control', (done) => {
+      $route.params.contentTypeId = 'success'
+
+      wrapper = shallow(ContentTypeEdit, {
+        store,
+        mocks: {
+          $route
+        }
+      })
+
+      wrapper.setData({
+        text: '',
+        tabMode: 'Create',
+        controlId: 1
+      })
+
+      wrapper.vm.controlsToAdd[1] = {
+        name: 'Not Guff',
+        id: 1
+      }
+
+      wrapper.vm.controlId = 1
+
+      wrapper.vm.text = 'Guff'
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.vm.controlsToAdd[1].name).toEqual('Guff')
+        done()
+      })
     })
   })
 })
