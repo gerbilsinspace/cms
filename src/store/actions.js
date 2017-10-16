@@ -116,7 +116,6 @@ export const actions = {
   },
 
   setMultipleItemData ({ commit }, payload) {
-    console.log(payload)
     commit('setLoading', true)
     firebase
       .database()
