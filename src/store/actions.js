@@ -12,9 +12,11 @@ export const actions = {
       commit('setLoading', false)
       commit('setError', null)
       router.push('/home')
+      payload.callback()
     }).catch((error) => {
       commit('setError', error.message)
       commit('setLoading', false)
+      payload.callback()
     })
   },
 
