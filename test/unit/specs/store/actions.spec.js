@@ -1,4 +1,6 @@
 /* global jest */
+jest.mock('vue-router')
+jest.mock('@/router')
 jest.mock('firebase', () => {
   return {
     auth: jest.fn(() => ({
@@ -8,8 +10,7 @@ jest.mock('firebase', () => {
     }))
   }
 })
-jest.mock('vue-router')
-jest.mock('@/router')
+
 import { actions } from '@/store/actions'
 import router from '@/router'
 
