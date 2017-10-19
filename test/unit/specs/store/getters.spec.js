@@ -1,4 +1,3 @@
-/* global jest */
 import { getters } from '@/store/getters'
 describe('getters', () => {
   it('should have an getAppTitle getter that gets the appTitle from the store', () => {
