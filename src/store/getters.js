@@ -1,5 +1,5 @@
 export const getters = {
-  appTitle (state) {
+  getAppTitle (state) {
     return state.appTitle
   },
   getUser (state) {

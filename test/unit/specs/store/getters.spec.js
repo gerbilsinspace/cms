@@ -1,11 +1,11 @@
 /* global jest */
 import { getters } from '@/store/getters'
 describe('getters', () => {
-  it('should have an appTitle getter that gets the appTitle from the store', () => {
+  it('should have an getAppTitle getter that gets the appTitle from the store', () => {
     let state = {
       appTitle: 'Gardening Club'
     }
-    const result = getters.appTitle(state)
+    const result = getters.getAppTitle(state)
 
     expect(result).toEqual('Gardening Club')
   })

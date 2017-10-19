@@ -67,7 +67,7 @@
     },
     computed: {
       appTitle () {
-        return this.$store.getters.appTitle
+        return this.$store.getters.getAppTitle
       },
       isAuthenticated () {
         return (
