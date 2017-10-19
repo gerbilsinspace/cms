@@ -12,11 +12,17 @@ export const actions = {
       commit('setLoading', false)
       commit('setError', null)
       router.push('/home')
-      payload.callback()
+
+      if (payload.callback) {
+        payload.callback()
+      }
     }).catch((error) => {
       commit('setError', error.message)
       commit('setLoading', false)
-      payload.callback()
+
+      if (payload.callback) {
+        payload.callback()
+      }
     })
   },
 
@@ -30,36 +36,63 @@ export const actions = {
       commit('setLoading', false)
       commit('setError', null)
       router.push('/home')
-      payload.callback()
+
+      if (payload.callback) {
+        payload.callback()
+      }
     }).catch((error) => {
       commit('setError', error.message)
       commit('setLoading', false)
-      payload.callback()
+
+      if (payload.callback) {
+        payload.callback()
+      }
     })
   },
 
-  userSignOut ({ commit }) {
+  autoSignIn ({ commit }, payload) {
+    commit('setUser', payload)
+  },
+
+  userSignOut ({ commit }, cb) {
     firebase.auth().signOut()
     commit('setUser', null)
     router.push('/')
+
+    if (cb) {
+      cb()
+    }
   },
 
-  watchContentTypes ({ commit }) {
+  watchContentTypes ({ commit }, cb) {
     firebase.database().ref('contentType').on('value', (snapshot) => {
+      console.log(snapshot);
       commit('setContentTypes', snapshot.val())
     })
+
+    if (cb) {
+      cb()
+    }
   },
 
-  watchImageData ({ commit }) {
+  watchImageData ({ commit }, cb) {
     firebase.database().ref('images').on('value', (snapshot) => {
       commit('setImageData', snapshot.val())
     })
+
+    if (cb) {
+      cb()
+    }
   },
 
-  watchData ({ commit }) {
+  watchData ({ commit }, cb) {
     firebase.database().ref('data').on('value', (snapshot) => {
       commit('setData', snapshot.val())
     })
+
+    if (cb) {
+      cb()
+    }
   },
 
   uploadImage ({ commit }, payload) {
@@ -68,13 +101,17 @@ export const actions = {
       .ref()
       .child('images/' + payload.file.name)
 
-    imageRef.put(payload.file).then(function (snapshot) {
+    imageRef.put(payload.file).then(snapshot => {
       const postKey = firebase.database().ref('images').push().key
       let postUpdate = {}
 
       postUpdate[postKey] = 'https://storage.googleapis.com/' + process.env.FIREBASE_STORAGE_BUCKET + '/' + snapshot.metadata.fullPath
       firebase.database().ref('images').update(postUpdate).then(() => {
         payload.onSuccess()
+
+        if (payload.db) {
+          payload.db()
+        }
       })
     })
   },
@@ -85,9 +122,17 @@ export const actions = {
       commit('setLoading', false)
       commit('setError', false)
       router.push('/content-types/' + payload.name)
+
+      if (payload.db) {
+        payload.db()
+      }
     }).catch((error) => {
       commit('setError', error.message)
       commit('setLoading', false)
+
+      if (payload.db) {
+        payload.db()
+      }
     })
   },
 
@@ -96,6 +141,10 @@ export const actions = {
       controls: payload.controls
     }).then(() => {
       router.push('/content-types')
+
+      if (payload.db) {
+        payload.db()
+      }
     })
   },
 
@@ -109,9 +158,17 @@ export const actions = {
         commit('setLoading', false)
         commit('setError', false)
         router.push('/data')
+
+        if (payload.db) {
+          payload.db()
+        }
       }).catch((error) => {
         commit('setLoading', false)
         commit('setError', error.message)
+
+        if (payload.db) {
+          payload.db()
+        }
       })
   },
 
@@ -125,9 +182,17 @@ export const actions = {
         commit('setLoading', false)
         commit('setError', false)
         router.push('/data')
+
+        if (payload.db) {
+          payload.db()
+        }
       }).catch((error) => {
         commit('setLoading', false)
         commit('setError', error.message)
+
+        if (payload.db) {
+          payload.db()
+        }
       })
   }
 }

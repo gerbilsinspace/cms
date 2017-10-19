@@ -27,13 +27,19 @@ jest.mock('firebase', () => {
             message: 'Error Message'
           })
         }
-      })
+      }),
+      signOut: jest.fn()
+    })),
+    database: jest.fn(() => ({
+      ref: jest.fn(() => ({
+      }))
     }))
   }
 })
 
 import { actions } from '@/store/actions'
 import router from '@/router'
+import firebase from 'firebase'
 
 describe('vuex actions', () => {
   describe('should have a userSignUp action that', () => {
@@ -134,5 +140,52 @@ describe('vuex actions', () => {
         callback
       })
     })
+  })
+
+  it('should have a userSignOut method that signs out the user', (done) => {
+    const { userSignOut } = actions
+    const commitObject = {
+      commit: jest.fn()
+    }
+    const { commit } = commitObject
+    const callback = () => {
+      expect(firebase.auth).toHaveBeenCalled()
+      expect(commit).toHaveBeenCalledWith('setUser', null)
+      done()
+    }
+
+    userSignOut(commitObject, callback)
+  })
+
+  it('should have a watchContentTypes function that adds content-types to vuex when firebase fires an event', () => {
+    expect('to have test').toEqual(true)
+  })
+
+  it('should have a watchImageData function that adds image data to the store when a firebase event occurs', () => {
+    expect('to have test').toEqual(true)
+  })
+
+  it('should have a watchData function that stores data to the store when a firebase event occurs', () => {
+    expect('to have test').toEqual(true)
+  })
+
+  it('should have an uploadImage function that uploads the image to the server and stores the url in the database', () => {
+    expect('to have test').toEqual(true)
+  })
+
+  it('should have a createContentType function that saves the initial contentType into the database', () => {
+    expect('to have test').toEqual(true)
+  })
+
+  it('should have a saveContentType function that saves changes to an existing contentType in the database', () => {
+    expect('to have test').toEqual(true)
+  })
+
+  it('should have a setItemData function that saves changes to existing data in the store', () => {
+    expect('to have test').toEqual(true)
+  })
+
+  it('should have a setMultipleItemData function that saves the initial state for a dataItem that will be multiple, to the database', () => {
+    expect('to have test').toEqual(true)
   })
 })
