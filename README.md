@@ -39,10 +39,10 @@ In order to use this CMS, you'll need a few things.
       ".read": "true",
       ".write": "auth != null"
     },
-  	"images": {
-			".read": "true",
-			".write": "auth != null"
-		}
+    "images": {
+      ".read": "true",
+      ".write": "auth != null"
+    }
   }
 }
 ```
