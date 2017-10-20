@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-layout row wrap md6 flex xs12 offset-md3>
     <v-flex xs12 class='text-xs-center' mt-5>
       <h3>Images</h3>
     </v-flex>
@@ -15,8 +15,13 @@
       </el-upload>
     </v-flex>
 
-    <v-flex v-for='image in images' :key='image'>
-      <img :src='image' style='height: 200px; display: block; margin: 0 auto;' />
+    <v-flex v-for='image in images' :key='image' xs3>
+      <div style='margin: 10px;'>
+        <img :src='image' style='
+          width: 100%;
+          display: block;
+        ' />
+      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -49,12 +54,8 @@ export default {
     uploadFile (data) {
       this.$store.dispatch('uploadImage', data)
     }
-  },
-  watch: {
-    images () {
-      this.downloadImages()
-    }
   }
 }
 </script>
 
+</style></style>

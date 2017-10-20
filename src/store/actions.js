@@ -66,7 +66,6 @@ export const actions = {
 
   watchContentTypes ({ commit }, cb) {
     firebase.database().ref('contentType').on('value', (snapshot) => {
-      console.log(snapshot)
       commit('setContentTypes', snapshot.val())
     })
 
