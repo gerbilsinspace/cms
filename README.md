@@ -30,11 +30,11 @@ In order to use this CMS, you'll need a few things.
 
 ```
 {
-	"rules": {
-		"contentType": {
-			".read": "true",
-			".write": "auth != null"
-		},
+  "rules": {
+    "contentType": {
+      ".read": "true",
+      ".write": "auth != null"
+    },
     "data": {
       ".read": "true",
       ".write": "auth != null"
