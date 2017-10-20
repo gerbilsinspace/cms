@@ -8,7 +8,7 @@ In order to use this CMS, you'll need a few things.
 
 * A [Firebase Account](https://firebase.google.com) with a new firebase project. Firebase is a database service from Google. We will use this to provide storage for our website information, and authentication. 
 
-## Setting up Firebase
+### Setting up Firebase
 
 * Created a Firebase account, if you have not done so already.
 * Press the Add Project button in the [console](https://console.firebase.google.com).
@@ -18,12 +18,12 @@ In order to use this CMS, you'll need a few things.
 * You shuold now have a project created, and you should have been directed to the overview page. There should be three large buttons in the center of the overview. Press Add Firebase to your web app.
 * Copy the script on your screen into a text editor for later. We will use the config section to set up the CMS later.
 
-## Authentication
+### Authentication
 
 * In order for you to be able to edit content on your website, you will need to be able to log in. Select the Authentication section in Firebase, and choose the Set Up Sign-In Method button in the center of the screen.
 * For now, let's setup Email/Password. Click Email/Password, and choose Enable.
 
-## Setting up the Database
+### Setting up the Database
 
 * Firebase have recently added Cloud Firestore to their service, but for now we want to use the realtime database. Click the Get Started button for Realtime Database
 * You should have been taken to a visual representation of your database, which is currently empty. That's fine. But for now, we want to set up permissions on the database, so our users can fill it with data. Click the rules tab.
@@ -50,7 +50,7 @@ In order to use this CMS, you'll need a few things.
 
 The rules here are pretty simple. We have three different areas of our database, contentTypes, data, and images. Each of them will be able to be read by the public, but we want to stop the whole world from writing to the database. Now, only people that have authenticated with our app can write to the database.
 
-## Setup Images
+### Setup Images
 
 In the previous section, we had an images part of the database. Unfortunately for us, however, we cannot store actual images into our database, only a reference to them. We'll user Google Cloud Storage to host the images, but we need to make sure that they can be accessed by the public. There is no point of us having images that people cannot see.
 
