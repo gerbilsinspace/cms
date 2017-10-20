@@ -1,6 +1,11 @@
-# cms
+# CMS
 
-> A Vue.js project
+> A Simple CMS using Vue
+
+In order to use this CMS, you'll need a few things.
+
+* A [Firebase Account](https://firebase.google.com) with a new firebase project. Firebase is a database service from Google. We will use this to provide storage for our website information, and authentication. 
+* Access to your Firebase's Google Cloud service so you can allow your images to be hosted publicly. Don't worry, we will go through how to do this.
 
 ## Build Setup
 
