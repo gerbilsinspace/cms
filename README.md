@@ -49,7 +49,7 @@ In order to use this CMS, you'll need a few things.
 
 The rules here are pretty simple. We have three different areas of our database, contentTypes, data, and images. Each of them will be able to be read by the public, but we want to stop the whole world from writing to the database. Now, only people that have authenticated with our app can write to the database.
 
-## Setup Images (Part 1)
+## Setup Images
 
 In the previous section, we had an images part of the database. Unfortunately for us, however, we cannot store actual images into our database, only a reference to them. We'll user Google Cloud Storage to host the images, but we need to make sure that they can be accessed by the public. There is no point of us having images that people cannot see.
 
