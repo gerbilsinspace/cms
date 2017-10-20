@@ -3,7 +3,7 @@
     <v-flex xs12 class='text-xs-center' mt-5>
       <h3>Data</h3>
     </v-flex>
-    <v-flex mt3 v-for='contentType in contentTypes' :key='contentType.name'>
+    <v-flex xs12 sm6 offset-sm3 mt-3 v-for='contentType in contentTypes' :key='contentType.name'>
       <div v-if='contentType.oneOff === "Yes"'>
         <v-btn
           primary

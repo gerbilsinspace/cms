@@ -47,8 +47,7 @@
     </v-flex>
     <v-flex xs12 sm6 offset-sm3 mt-3>
       <div v-for='key in Object.keys(contentTypes)' :key='key'>
-        {{ key }}
-        <v-btn primary :to='"/content-types/" + key'>Edit</v-btn>
+        <v-btn primary :to='"/content-types/" + key'>{{ key }}</v-btn>
       </div>
     </v-flex>
   </v-layout>
