@@ -7,8 +7,6 @@
 In order to use this CMS, you'll need a few things.
 
 * A [Firebase Account](https://firebase.google.com) with a new firebase project. Firebase is a database service from Google. We will use this to provide storage for our website information, and authentication. 
-* A url that you have purchased that you want the website to be hosted on. Nearly Free Speech, Namecheap and Netlify are all fantastic services to purchase your URL from.
-* A service to host your website. We recommend using Netlify, as they have a free tier for open source projects, and are very easy to use. Documentation on how to host with netlify is below.
 
 ## Setting up Firebase
 
