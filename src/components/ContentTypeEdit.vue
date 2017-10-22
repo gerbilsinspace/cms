@@ -51,17 +51,58 @@
     </v-flex>
     <v-flex
       mt-3
-      style='margin-left: 300px;'
-      v-for='control in controlsToAdd'
-      :key='control.id'
+      xs12
+      sm6
+      style='margin-left: 300px; position: relative'
+      v-for='item in controlsToAdd'
+      :key='item.id'
     >
-      <v-btn
+      <div
+        class='item-overlay'
         v-on:click='controlClick'
-        :data-id='control.id'
-        :data-name='control.name'
-      >
-        {{ control.name }}
-      </v-btn>
+        :data-name='item.name'
+        :data-id='item.id'
+      ></div>
+      <label>{{ item.name }}</label>
+      <el-input
+        v-if='item.type === "text"'
+        :name='item.name'
+        v-model='item.value'
+      />
+      <el-input
+        v-if='item.type === "paragraph"'
+        :name='item.name'
+        v-model='item.value'
+        type='textarea'
+      />
+      <el-input-number
+        v-if='item.type === "number"'
+        v-model='item.value'
+      />
+      <el-switch
+        v-if='item.type === "switch"'
+        v-model='item.value'
+      />
+      <el-date-picker
+        v-if='item.type === "date-time"'
+        :value='item.value'
+        type='datetime'
+      />
+      <el-color-picker
+        v-if='item.type === "color"'
+        v-model='item.value'
+      />
+      <v-select
+        v-if='item.type === "images"'
+        :items='images'
+        v-model='item.value'
+        :label='item.name'
+        multiple
+      />
+      <el-rate
+        v-if='item.type === "rate"'
+        v-model='item.value'
+      />
     </v-flex>
   </v-layout>
 </template>
@@ -78,7 +119,7 @@ export default {
         { type: 'text', label: 'Text', defaultValue: '' },
         { type: 'paragraph', label: 'Paragraph', defaultValue: '' },
         { type: 'number', label: 'Number', defaultValue: 0 },
-        { type: 'switch', label: 'Switch', defaultValue: false },
+        { type: 'switch', label: 'Switch', defaultValue: true },
         { type: 'date-time', label: 'Date / Time', defaultValue: 0 },
         { type: 'color', label: 'Colour', defaultValue: 0 },
         { type: 'images', label: 'Images', defaultValue: [] },
@@ -140,9 +181,9 @@ export default {
       this.tabMode = 'Edit'
     },
     controlClick (event) {
-      this.controlId = event.path[1].dataset.id
+      this.controlId = event.path[0].dataset.id
       this.tabMode = 'Edit'
-      this.text = event.path[1].dataset.name
+      this.text = event.path[0].dataset.name
     }
   },
   watch: {
@@ -169,5 +210,13 @@ export default {
   .small {
     font-size: 25px;
     padding: 10px 10px 0;
+  }
+  .item-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
   }
 </style>
