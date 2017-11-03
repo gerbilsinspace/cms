@@ -31,12 +31,14 @@
         </v-layout>
       </form>
     </v-flex>
-    <v-flex v-for='key in Object.keys(items)' :key='key'>
-      <v-btn
-        primary
-        v-on:click='onButtonClick'
-        :data-name='key'
-      >{{key}}</v-btn>
+    <v-flex v-if='items'>
+      <div v-for='key in Object.keys(items)' :key='key'>
+        <v-btn
+          primary
+          v-on:click='onButtonClick'
+          :data-name='key'
+        >{{key}}</v-btn>
+      </div>
     </v-flex>
   </v-layout>
 </template>

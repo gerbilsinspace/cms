@@ -79,6 +79,9 @@
         v-if='item.type === "number"'
         v-model='item.value'
       />
+      <div v-if='item.type === "switch"'>
+        {{ item }}
+      </div>
       <el-switch
         v-if='item.type === "switch"'
         v-model='item.value'
@@ -154,7 +157,10 @@ export default {
 
       for (var control of this.controlsToAdd) {
         names.push(control.name)
+        console.log('control', control)
       }
+
+      console.log(names)
 
       if ([...new Set(names)].length < this.controlsToAdd.length) {
         this.$store.commit('setError', 'Each control needs to have a unique name')
