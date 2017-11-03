@@ -79,9 +79,6 @@
         v-if='item.type === "number"'
         v-model='item.value'
       />
-      <div v-if='item.type === "switch"'>
-        {{ item }}
-      </div>
       <el-switch
         v-if='item.type === "switch"'
         v-model='item.value'
