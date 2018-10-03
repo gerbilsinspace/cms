@@ -1,5 +1,7 @@
 # CMS
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/gerbilsinspace/cms.svg)](https://greenkeeper.io/)
+
 > A Simple CMS written in Vue
 
 ## Prerequisites
